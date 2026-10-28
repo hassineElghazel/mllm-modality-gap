@@ -73,6 +73,7 @@ wandb/
 
 # Thesis working folder: documents, not code. Back this up SEPARATELY.
 thesis draft/
+paper draft/
 
 # Editor / slides / local scratch
 *.code-workspace
