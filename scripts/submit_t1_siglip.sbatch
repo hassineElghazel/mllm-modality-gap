@@ -1,14 +1,14 @@
 #!/bin/bash
 #SBATCH --job-name=t1-siglip
 #SBATCH --partition=RTX
-#SBATCH --gpus=2080ti:1
+#SBATCH --gpus=2080_ti:1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=32GB
 #SBATCH --time=02:00:00
 #SBATCH --requeue
-#SBATCH --output=outputs/logs/t1_siglip_%j.out
-#SBATCH --error=outputs/logs/t1_siglip_%j.err
+#SBATCH --output=/nfs/home/elghazel/LLAMA_modality_gap/outputs/logs/t1_siglip_%j.out
+#SBATCH --error=/nfs/home/elghazel/LLAMA_modality_gap/outputs/logs/t1_siglip_%j.err
 
 # ---------------------------------------------------------------------------
 # TIER 1 / job 5.  SigLIP AS A SECOND, INDEPENDENT JUDGE.
@@ -39,7 +39,9 @@ cd ~/LLAMA_modality_gap
 mkdir -p outputs/logs outputs/metrics
 
 # dd256 tags: captions_<tag>.json must exist for each
-CONDS="${CONDS:-C3pinr_dd256 Cloc_dd256 Cscale1500_dd256 Crank15_dd256 Corient_dd256 Clocorient_dd256}"
+CONDS="${CONDS:-C3pinr Cloc Cscale1500 Crank15 Corient Clocorient C3pinr_dd256 Cloc_dd256 Cscale1500_dd256 Crank15_dd256 Corient_dd256 Clocorient_dd256}"
+# OOD captions live under a different image root, so they take the OOD config.
+OOD_CONDS="${OOD_CONDS:-C3pinr_ood Cloc_ood Cscale1500_ood Crank15_ood Corient_ood Clocorient_ood}"
 
 for c in $CONDS; do
   f="outputs/predictions/captions_${c}.json"
@@ -49,5 +51,12 @@ for c in $CONDS; do
     || echo "[siglip] $c FAILED (continuing)" >&2
 done
 
+for c in $OOD_CONDS; do
+  f="outputs/predictions/captions_${c}.json"
+  if [ ! -f "$f" ]; then echo "[skip] $c (no $f)"; continue; fi
+  echo "==================== SigLIP (OOD)  $c ===================="
+  python scripts/15b_siglip_score.py --config configs/ood_eval.yaml --condition "$c" \
+    || echo "[siglip] $c FAILED (continuing)" >&2
+done
 echo "[siglip] complete $(date -u +%Y-%m-%dT%H:%M:%SZ)"
 echo "[siglip] results: outputs/metrics/siglip_*.json"

@@ -97,12 +97,24 @@ def main():
     with out_path.open("w") as f:
         json.dump(summary, f, indent=2)
 
+    # Per-image records, so differences between conditions can be tested with a
+    # paired bootstrap over images rather than an unpaired z on the summary std.
+    records_path = scores_dir / f"clipscore_records_{args.condition}.json"
+    with records_path.open("w") as f:
+        json.dump(
+            [
+                {"image_id": r["image_id"], "cosine": float(c), "clipscore": float(s)}
+                for r, c, s in zip(preds, cosines, clip_s.tolist())
+            ],
+            f,
+        )
+
     print(
         f"[ok] {args.condition}: CLIPScore={summary['CLIPScore']:.4f} "
         f"(±{summary['CLIPScore_std']:.4f}, n={summary['n_evaluated']}, "
         f"{args.clip_model})"
     )
-    print(f"[ok] wrote {out_path}")
+    print(f"[ok] wrote {out_path} and {records_path}")
 
 
 if __name__ == "__main__":

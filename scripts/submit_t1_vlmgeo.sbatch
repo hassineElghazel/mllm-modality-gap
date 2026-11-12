@@ -1,14 +1,14 @@
 #!/bin/bash
 #SBATCH --job-name=t1-vlmgeo
 #SBATCH --partition=RTX
-#SBATCH --gpus=2080ti:1
+#SBATCH --gpus=2080_ti:1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=64GB
 #SBATCH --time=10:00:00
 #SBATCH --requeue
-#SBATCH --output=outputs/logs/t1_vlmgeo_%j.out
-#SBATCH --error=outputs/logs/t1_vlmgeo_%j.err
+#SBATCH --output=/nfs/home/elghazel/LLAMA_modality_gap/outputs/logs/t1_vlmgeo_%j.out
+#SBATCH --error=/nfs/home/elghazel/LLAMA_modality_gap/outputs/logs/t1_vlmgeo_%j.err
 
 # ---------------------------------------------------------------------------
 # TIER 1 / job 3.  GENERALITY, WITHOUT TRAINING ANYTHING.
@@ -51,6 +51,8 @@ source ~/miniforge3/etc/profile.d/conda.sh
 conda activate llama_gap
 export HF_TOKEN=$(cat ~/.cache/huggingface/token 2>/dev/null || true)
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+# ~40 GB of downloads: keep them off the quota-bound home, on node-local /tmp.
+export HF_HOME="${HF_HOME:-/tmp/elghazel_hf}"; mkdir -p "$HF_HOME"
 
 cd ~/LLAMA_modality_gap
 mkdir -p outputs/logs outputs/metrics outputs/embeddings_1300

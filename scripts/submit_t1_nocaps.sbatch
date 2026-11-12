@@ -1,14 +1,14 @@
 #!/bin/bash
 #SBATCH --job-name=t1-nocaps
 #SBATCH --partition=RTX
-#SBATCH --gpus=2080ti:1
+#SBATCH --gpus=2080_ti:1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=64GB
 #SBATCH --time=12:00:00
 #SBATCH --requeue
-#SBATCH --output=outputs/logs/t1_nocaps_%j.out
-#SBATCH --error=outputs/logs/t1_nocaps_%j.err
+#SBATCH --output=/nfs/home/elghazel/LLAMA_modality_gap/outputs/logs/t1_nocaps_%j.out
+#SBATCH --error=/nfs/home/elghazel/LLAMA_modality_gap/outputs/logs/t1_nocaps_%j.err
 
 # ---------------------------------------------------------------------------
 # TIER 1 / job 4.  COMPLETE THE OUT-OF-DISTRIBUTION EVALUATION.

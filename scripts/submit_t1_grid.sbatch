@@ -1,14 +1,14 @@
 #!/bin/bash
 #SBATCH --job-name=t1-grid
 #SBATCH --partition=RTX
-#SBATCH --gpus=2080ti:1
+#SBATCH --gpus=2080_ti:1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=64GB
 #SBATCH --time=08:00:00
 #SBATCH --requeue
-#SBATCH --output=outputs/logs/t1_grid_%j.out
-#SBATCH --error=outputs/logs/t1_grid_%j.err
+#SBATCH --output=/nfs/home/elghazel/LLAMA_modality_gap/outputs/logs/t1_grid_%j.out
+#SBATCH --error=/nfs/home/elghazel/LLAMA_modality_gap/outputs/logs/t1_grid_%j.err
 
 # ---------------------------------------------------------------------------
 # TIER 1 / job 2.  COMPLETE THE INTERVENTION GRID'S CLIPScore CELLS.
@@ -52,7 +52,7 @@ mkdir -p outputs/logs outputs/metrics/intervene outputs/predictions/intervene
 CKPT="${CKPT:-outputs/checkpoints/stage2_vlm_C3.pt}"
 EMB="${EMB:-C3_stage2}"
 SUBSET="${SUBSET:-300}"
-DOSES="${DOSES:-0.25 0.5 0.75 1 1.25 1.5}"
+DOSES="${DOSES:-0.25 0.5 1}"
 
 test -f "$CKPT" || { echo "[grid] FATAL: $CKPT missing" >&2; exit 1; }
 

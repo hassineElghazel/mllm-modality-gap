@@ -1,14 +1,14 @@
 #!/bin/bash
 #SBATCH --job-name=t1-serving
 #SBATCH --partition=RTX
-#SBATCH --gpus=2080ti:1
+#SBATCH --gpus=2080_ti:1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=64GB
 #SBATCH --time=04:00:00
 #SBATCH --requeue
-#SBATCH --output=outputs/logs/t1_serving_%j.out
-#SBATCH --error=outputs/logs/t1_serving_%j.err
+#SBATCH --output=/nfs/home/elghazel/LLAMA_modality_gap/outputs/logs/t1_serving_%j.out
+#SBATCH --error=/nfs/home/elghazel/LLAMA_modality_gap/outputs/logs/t1_serving_%j.err
 
 # ---------------------------------------------------------------------------
 # TIER 1 / job 1.  SERVING COST.  The venue-fit item.
