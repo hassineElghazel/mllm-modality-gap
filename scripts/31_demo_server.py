@@ -12,7 +12,7 @@ the thesis measured. It is loaded ONCE at startup and stays resident.
         --vlm-checkpoint outputs/checkpoints/stage2_vlm_Cloc_long.pt
 
     # from your laptop, tunnel to it and open http://localhost:8080
-    ssh -N -L 8080:<node>:8080 elghazel@odin
+    ssh -N -L 8080:<node>:8080 <user>@<login-node>
 
 Two checkpoints can be shown side by side with --compare, which is the honest
 way to demonstrate an improvement.
