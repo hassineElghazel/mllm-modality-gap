@@ -35,7 +35,8 @@ from pathlib import Path
 
 import torch
 
-from src.data.coco_val2017_loader import CocoVal2017Dataset
+from src.captioning.inference import _format_prompt
+from src.data.coco_val2017_loader import CocoVal2017Dataset, load_image
 from src.utils.io import load_yaml
 from src.utils.reproducibility import set_seed
 
@@ -138,18 +139,23 @@ def main():
     params = _count_params(vlm)
     ckpt_bytes = Path(args.vlm_checkpoint).stat().st_size if Path(args.vlm_checkpoint).exists() else None
 
-    prompt = cap_cfg["prompt"]["user"]
+    # Same prompt formatting and image loading as run_captioning, so the timed
+    # generation is exactly the one the captioning numbers come from.
+    prompt = _format_prompt(cap_cfg["prompt"]["user"])
     gen_kwargs = dict(cap_cfg["generation"])
 
+    # Decode every image before timing, so latency measures the model, not disk.
+    images = [load_image(it.image_path) for it in items]
+
     # ---- warmup, untimed ----
-    for img, _ in items[: args.warmup]:
+    for img in images[: args.warmup]:
         _ = vlm.generate([img], prompt, **gen_kwargs)
     torch.cuda.synchronize()
 
     # ---- timed, batch=1: this is the serving case ----
     lat = []
     t0 = time.perf_counter()
-    for img, _ in items[args.warmup:]:
+    for img in images[args.warmup:]:
         t = time.perf_counter()
         _ = vlm.generate([img], prompt, **gen_kwargs)
         torch.cuda.synchronize()
