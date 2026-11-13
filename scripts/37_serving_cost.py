@@ -51,20 +51,35 @@ def _import_captioning_module():
     return mod
 
 
+def _numel(p):
+    # bitsandbytes packs two 4-bit values per byte, so a quantized weight's numel()
+    # is half its logical size. Its quant_state keeps the original shape.
+    qs = getattr(p, "quant_state", None)
+    shape = getattr(qs, "shape", None)
+    if shape is not None:
+        out = 1
+        for s in shape:
+            out *= int(s)
+        return out
+    return p.numel()
+
+
 def _count_params(vlm):
     def n(m):
-        return sum(p.numel() for p in m.parameters()) if m is not None else 0
+        return sum(_numel(p) for p in m.parameters()) if m is not None else 0
 
     def n_train(m):
-        return sum(p.numel() for p in m.parameters() if p.requires_grad) if m is not None else 0
+        return sum(_numel(p) for p in m.parameters() if p.requires_grad) if m is not None else 0
 
-    connector = getattr(vlm, "_connector", None) or getattr(vlm, "connector", None)
-    encoder = getattr(vlm, "_encoder", None) or getattr(vlm, "encoder", None)
-    llm = getattr(vlm, "_llm", None)
+    # VLM keeps the connector as .projector, and CLIPViTL14Encoder is a plain
+    # wrapper whose nn.Module is ._vision.
+    connector = vlm.projector
+    encoder = vlm.encoder._vision
+    llm = vlm._llm
 
     lora = 0
     if llm is not None:
-        lora = sum(p.numel() for name, p in llm.named_parameters() if "lora" in name.lower())
+        lora = sum(_numel(p) for name, p in llm.named_parameters() if "lora" in name.lower())
 
     return {
         "connector": n(connector),

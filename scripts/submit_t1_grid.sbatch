@@ -72,6 +72,7 @@ HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 python scripts/16_intervene_geometry.py 
     --subset-size "$SUBSET" \
     --interventions mean_shift random_shift \
     --caption-doses $DOSES \
-    --geom-doses $DOSES
+    --geom-doses $DOSES \
+    --clip-model "${CLIP_MODEL:-/nfs/home/elghazel/clip_b32}"
 
 echo "[grid] complete $(date -u +%Y-%m-%dT%H:%M:%SZ)"

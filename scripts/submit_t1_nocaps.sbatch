@@ -78,6 +78,7 @@ python - << 'PY'
 import json, glob, os
 rows=[]
 for f in sorted(glob.glob('outputs/metrics/clipscore_*_ood.json')):
+    if 'clipscore_records_' in f: continue
     try: d=json.load(open(f))
     except Exception: continue
     rows.append((os.path.basename(f).replace('clipscore_','').replace('_ood.json',''),
