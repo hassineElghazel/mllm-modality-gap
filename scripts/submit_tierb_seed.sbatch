@@ -37,7 +37,7 @@ export HF_TOKEN=$(cat ~/.cache/huggingface/token 2>/dev/null || true)
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 source ~/.telegram_env 2>/dev/null || true   # TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID for src/utils/notify.py too
 
-COND="${COND:?set COND to one of C3pinr Cloc Corient Crank15}"
+COND="${COND:?set COND to one of C3pinr Cloc Corient Crank15 Cscale1500 Clocorient C3_stage2}"
 SEED="${SEED:-1337}"
 TAG="${COND}_s${SEED}"
 CK="stage2_vlm_${TAG}.pt"
@@ -62,6 +62,12 @@ case "$COND" in
   Crank15) TRAIN=(scripts/18_train_c6_orientation_pinned.py --pool all257 --lambda 0.0 --lambda-p 10 --lambda-s 1.0 --lambda-rank 1.0 --effrank0 15) ;;
   Corient) TRAIN=(scripts/18_train_c6_orientation_pinned.py --pool all257 --lambda 0.5 --lambda-p 10 --lambda-s 1.0 --lambda-rank 1.0) ;;
   Cloc)    TRAIN=(scripts/17_train_c5_distance.py          --pool all257 --lambda-d 0.1 --lambda-s 1.0 --lambda-rank 1.0) ;;
+  # Flags below copied from the seed-42 launch lines in submit_pooled.sbatch and
+  # checked against logs pooled_86397 (Cscale1500) and pooled_86991 (Clocorient).
+  Cscale1500) TRAIN=(scripts/18_train_c6_orientation_pinned.py --pool all257 --lambda 0.0 --lambda-p 10 --lambda-s 1.0 --btrace0 1500 --lambda-rank 1.0) ;;
+  Clocorient) TRAIN=(scripts/18_train_c6_orientation_pinned.py --pool all257 --lambda 0.5 --close-location --lambda-p 0.1 --lambda-s 1.0 --lambda-rank 1.0) ;;
+  # Baseline (standard Stage 2, no geometry term), as run_condition.py ran C3.
+  C3_stage2)  TRAIN=(scripts/06_train_stage2.py --init-connector outputs/checkpoints/stage1_connector_C2.pt) ;;
   *) die "unknown COND=$COND" ;;
 esac
 

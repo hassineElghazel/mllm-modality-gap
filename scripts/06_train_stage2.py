@@ -191,6 +191,8 @@ def main():
     p.add_argument("--output-name", default=None,
                    help="override the checkpoint filename (e.g. stage2_vlm_C1.pt); "
                         "use to keep C1 and C3 outputs in separate files")
+    p.add_argument("--seed", type=int, default=None,
+                   help="override the config seed for repeat runs (data order, LoRA init)")
     args = p.parse_args()
 
     cfg = load_yaml(args.config)
@@ -198,7 +200,10 @@ def main():
     enc_cfg = load_yaml(args.encoders_config)
     llm_cfg = load_yaml(args.llm_config)
     data_cfg = load_yaml(args.data_config)
+    if args.seed is not None:
+        cfg["seed"] = int(args.seed)
     set_seed(cfg["seed"])
+    print(f"[seed] run seed = {cfg['seed']}")
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     cfg["device"] = device

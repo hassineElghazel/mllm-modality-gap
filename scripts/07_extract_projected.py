@@ -95,6 +95,9 @@ CONDITIONS = {
     "Cloc_s1337":    {"connector": "outputs/checkpoints/stage2_vlm_Cloc_s1337.pt",    "uses_stage2": True},
     "Corient_s1337": {"connector": "outputs/checkpoints/stage2_vlm_Corient_s1337.pt", "uses_stage2": True},
     "Crank15_s1337": {"connector": "outputs/checkpoints/stage2_vlm_Crank15_s1337.pt", "uses_stage2": True},
+    "Cscale1500_s1337": {"connector": "outputs/checkpoints/stage2_vlm_Cscale1500_s1337.pt", "uses_stage2": True},
+    "Clocorient_s1337": {"connector": "outputs/checkpoints/stage2_vlm_Clocorient_s1337.pt", "uses_stage2": True},
+    "C3_stage2_s1337":  {"connector": "outputs/checkpoints/stage2_vlm_C3_stage2_s1337.pt",  "uses_stage2": True},
     # Corient = clean-orientation: InfoNCE drive (lambda_o=0.9) + loc/scale/rank pins (isolate ORIENTATION).
     "Corient":     {"connector": "outputs/checkpoints/stage2_vlm_Corient.pt",     "uses_stage2": True},
     # CLIP-text-anchor arm: Cloc/Corient retrained toward the frozen CLIP text tower.
