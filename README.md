@@ -1,7 +1,7 @@
 # Modality Gap Properties in Multimodal LLMs for Image Captioning
 
 > Code and results for the paper *Modality Gap Properties in Multimodal LLMs for Image Captioning*.
-> Hassine El Ghazel · Federico D'Asaro · Giuseppe Rizzo
+> Hassine El Ghazel · Dr. Federico D'Asaro · Prof. Giuseppe Rizzo
 
 ---
 
