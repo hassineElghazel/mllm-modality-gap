@@ -1,7 +1,7 @@
 # Modality Gap Properties in Multimodal LLMs for Image Captioning
 
-> Master's thesis · Politecnico di Torino, Data Science and Engineering, a.y. 2025–2026
-> Hassine El Ghazel · supervisors prof. Giuseppe Rizzo, Dr. Federico D'Asaro, Dr. Luca Catalano
+> Code and results for the paper *Modality Gap Properties in Multimodal LLMs for Image Captioning*.
+> Hassine El Ghazel · Federico D'Asaro · Giuseppe Rizzo
 
 ---
 
@@ -254,7 +254,7 @@ You may use, study, modify and redistribute it, including for research, provided
 works are released under the same licence. If you run a modified version as a network
 service, the AGPL requires you to offer its source to users of that service.
 
-**The thesis and paper text, their figures and the generated captions** are not covered by that
+**The paper text, its figures and the generated captions** are not covered by that
 licence. All rights in them are reserved by the author.
 
 Vendored third-party files retain their original licences; see `THIRD_PARTY_LICENSES.md`.
