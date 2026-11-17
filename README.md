@@ -1,200 +1,189 @@
-# Single-Axis Attribution of the Modality Gap in Multimodal Language Models
+# Modality Gap Properties in Multimodal LLMs for Image Captioning
 
 > Master's thesis · Politecnico di Torino, Data Science and Engineering, a.y. 2025–2026
 > Hassine El Ghazel · supervisors prof. Giuseppe Rizzo, Dr. Federico D'Asaro, Dr. Luca Catalano
 
 ---
 
-## What this asks
+## Summary
 
-Corrections for the modality gap move several geometric components at once, whether by a fixed map
-over frozen embeddings or by a separately trained alignment, and report one aggregate score. Credit
-is never divided between the components moved, so which of them a decoder is sensitive to remains
-unknown.
+Contrastive models such as CLIP show a *modality gap*: image and text embeddings occupy separate
+regions of their shared space. The gap also appears in connector-based multimodal large language
+models, between the projected image tokens and the text-token embeddings in the language model's
+input space, and it persists in fully trained released models such as LLaVA-1.5.
 
-This work asks that question inside a **connector-based multimodal language model**, where the
-generated caption is the only read-out. In this model, instruction tuning on its own moves the image
-centroid **38 %** further from the text centroid, from 177.67 to 245.46, because nothing in the
-standard recipe prevents it.
-
-The gap is decomposed into **four measurable axes**. Each is driven in turn while the other three are
-**pinned** at their pre-intervention values, and the pins are verified from the trained model rather
-than assumed.
+Existing corrections change several properties of the gap at once and evaluate the combined effect,
+so they cannot show which property matters. This work decomposes the gap into **four properties**
+(centroid distance, total variance, effective rank and subspace alignment) and drives each with a
+training loss while **holding the other three fixed**. For image captioning, only closing the
+centroid distance improves every measure over a model with all four properties held fixed: captions
+match their images better and name more of the objects present while hallucinating fewer.
+Compressing the variance hurts, changing the effective rank has no clear effect, and aligning the
+subspaces helps only a little. The loss acts during training only, so the deployed model is
+unchanged.
 
 ---
 
 ## Architecture
 
-Fixed across every condition. The connector is the only component whose output geometry varies.
+A frozen CLIP ViT-L/14 encoder, a trainable two-layer MLP connector, and a frozen LLaMA-2-7B (4-bit)
+with LoRA adapters. The connector is the only trainable link between the modalities, so every change
+to the geometry of the visual representation passes through it. The gap is measured where the
+decoder reads its input: between `X`, the 257 projected image tokens, and `Y`, the text tokens, both
+in the 4096-d embedding space.
 
 <p align="center">
-  <img src="docs/img/architecture.png" alt="Image path through frozen CLIP ViT-L/14 and a trainable MLP connector, text path through the frozen embedding table, both feeding a frozen 4-bit LLaMA-2-7B with LoRA adapters" width="560">
+  <img src="docs/img/architecture.png" alt="Visual path: image, frozen CLIP ViT-L/14, trainable MLP connector, X (257 image tokens, 4096-d). Textual path: text, frozen embedding table, Y (text tokens, 4096-d). Both feed a frozen 4-bit LLaMA-2-7B with LoRA adapters." width="520">
 </p>
-
-| component | detail |
-|:---|:---|
-| Vision encoder | CLIP ViT-L/14 at 224 px, frozen, 257 visual tokens |
-| Connector | `mlp2x_gelu`, 1024 → 4096 → 4096, 21.0 M parameters |
-| Decoder | LLaMA-2-7B, 4-bit NF4 with double quantisation, bfloat16 compute |
-| Adapters | LoRA r = 8, α = 16, dropout 0.05, on `q_proj` / `v_proj` / `o_proj` |
-| Measurement point | connector output, 4096-d, mean over the 257 projected tokens |
-
----
 
 ## Training
 
-Two stages, following the LLaVA recipe.
+Two stages. **Stage 1** trains only the connector with a symmetric InfoNCE loss between the
+`[CLS]` token and the mean-pooled caption embedding (Bunny-v1.1). **Stage 2** trains the connector
+and the LoRA adapters with an autoregressive loss on response tokens only (LLaVA-Instruct-150K).
+Standard training (Stage 1 then Stage 2, no geometry term) is the **baseline**. The geometry losses
+below are added in Stage 2.
 
 <p align="center">
-  <img src="docs/img/training_stages.png" alt="Left: Stage 1, contrastive connector alignment against the frozen embedding table. Right: Stage 2, instruction tuning with a loss on response tokens only" width="820">
+  <img src="docs/img/training_stages.png" alt="Left: Stage 1, contrastive connector alignment against the frozen embedding table. Right: Stage 2, instruction tuning with LoRA under an autoregressive loss on response tokens." width="860">
 </p>
-
-<p align="center"><em>Left: Stage 1, connector alignment. Right: Stage 2, instruction tuning.</em></p>
-
-**Stage 1 · connector alignment.** Only the connector moves. A symmetric InfoNCE objective aligns the
-connector's `[CLS]` output with the mean-pooled lookups of the decoder's frozen embedding table: CLIP
-with the text tower replaced by a fixed one. Data: Bunny-v1.1.
-
-**Stage 2 · instruction tuning.** The connector is refined together with the LoRA adapters under an
-autoregressive cross-entropy loss on response tokens only, so on its own this stage gives the
-connector no direct signal about the geometry it produces. The geometry terms enter here. The
-proposed configuration, **Cloc**, is
-
-$$\mathcal{L} = 0.9\,\mathcal{L}_{\mathrm{AR}} + 0.1\,\mathcal{L}_{\mathrm{dist}}
-              + 1.0\,\mathcal{L}_{\mathrm{scale}} + 1.0\,\mathcal{L}_{\mathrm{rank}}$$
-
-The driven term is paid for out of the language budget through a convex combination; the two pins are
-additive guards that hold scale and shape at their post-Stage-1 setpoints. Moving a pin's setpoint
-instead of freezing it is what turns a pin into a drive.
-
-| | Stage 1 | Stage 2 |
-|:---|:---|:---|
-| Objective | symmetric InfoNCE | AR cross-entropy (+ geometry terms) |
-| Trainable | connector | connector and LoRA |
-| Data | Bunny-v1.1 | LLaVA-Instruct-150K, ≈ 14,400 items |
-| Learning rate | 5e-4, cosine, 3 % warm-up | 2e-4, cosine, 3 % warm-up |
-| Batch | 64 | 4 × 8 accumulation (effective 32) |
-
-Every condition runs **450 optimizer steps**, about **9.1 % of one epoch**, on a **single RTX 2080 Ti
-(11 GB)**. bfloat16, seed 42.
 
 ---
 
-## The four axes
+## The four properties
 
-Let $\bar x, \bar y$ be the cloud means and $\Sigma_X$ the image covariance, with eigenvalues
-$\lambda_1 \ge \dots \ge \lambda_d$ and $d = 4096$. Everything is measured **at the connector
-output**, because that is the input the decoder actually receives.
+Measured on the mean of the 257 projected tokens of each image (cloud `X`) and the mean of the
+caption's token embeddings (cloud `Y`):
 
-| axis | definition | plain meaning |
+| property | measure | what it captures |
 |:---|:---|:---|
-| **Location** | $G_\mu = \lVert \bar x - \bar y \rVert$, $\;\widehat G_\mu = G_\mu / \sqrt{\mathrm{tr}\Sigma_X}$ | distance between the two centres |
-| **Scale** | $s = \mathrm{tr}\Sigma_X = \sum_j \lambda_j$ | total variance of the image cloud |
-| **Shape** | $r = (\mathrm{tr}\Sigma_X)^2 / \mathrm{tr}(\Sigma_X^2) \in [1,d]$ | how many directions the variance occupies |
-| **Orientation** | $O_q = \frac{1}{q}\lVert U_X^{(q)\top} U_Y^{(q)}\rVert_F^2 = \frac{1}{q}\mathrm{tr}(P_X P_Y)$ | overlap of the principal subspaces |
+| location | $G_\mu = \lVert \bar x - \bar y \rVert$ | distance between the two cloud centres |
+| scale | $s = \mathrm{tr}\,\Sigma_X$ | total variance of the image cloud |
+| shape | effective rank $r = (\mathrm{tr}\,\Sigma_X)^2 / \mathrm{tr}(\Sigma_X^2)$ | how many directions the variance uses |
+| orientation | $O_{16}$, overlap of the top-16 subspaces | alignment of the main directions |
 
-The diagnostic computes twenty scalars per checkpoint; these four survive three constraints:
-non-degeneracy, non-redundancy, and controllability by a differentiable penalty on a single batch.
-Orientation is read as a multiple of chance $q/d$; results use $q = 16$, where chance is
-$\approx 3.9 \times 10^{-3}$.
+Each property can be **driven** to a new target or **constrained** at its post-Stage-1 value. The
+**control** constrains all four. Every other condition drives exactly one property and constrains
+the other three.
 
 <p align="center">
-  <img src="docs/img/interventions.png" alt="Five panels: identity, location (mean-shift), orientation (rotate), scale (shrink) and shape (anisotropy), each showing the image cloud before and after against a fixed text cloud" width="900">
+  <img src="docs/img/interventions.png" alt="Five panels: the control, location (shift towards the text cloud), orientation (rotation), scale (compression) and shape (rounder cloud)." width="860">
 </p>
 
-<p align="center"><em>The single-axis interventions. The text cloud is fixed because it comes from the frozen embedding table.</em></p>
+The location drive pulls the batch mean of the pooled image vectors towards the text centroid:
+
+$$\mathcal{L}_{\mathrm{dist}} = \frac{\lVert \bar z - \mu_y \rVert^2}{s_X}, \qquad
+\bar z = \frac{1}{BT}\sum_{b=1}^{B}\sum_{t=1}^{T} u_{b,t}$$
+
+Every token receives the same gradient, so the image cloud moves as a whole.
+
+<p align="center">
+  <img src="docs/img/pooling.png" alt="(a) Tokens are averaged per image into z_b and over the batch into z-bar. (b) The distance from z-bar to the text centroid, drawn to scale for the control." width="420">
+</p>
+
+The adopted method, **Cloc**, is
+
+$$\mathcal{L} = 0.9\,\mathcal{L}_{\mathrm{AR}} + 0.1\,\mathcal{L}_{\mathrm{dist}} + 1.0\,\mathcal{L}_{\mathrm{scale}} + 1.0\,\mathcal{L}_{\mathrm{rank}}.$$
 
 ---
 
 ## Results
 
-### Isolation is measured, not assumed
+### Main result
 
-Geometry each condition reached, n = 5,000. Bold marks the targeted axis.
+| | CLIPScore ↑ | SPICE ↑ | METEOR ↑ | CLIPScore ↑ | CHAIR<sub>s</sub> ↓ | CHAIR<sub>i</sub> ↓ | recall ↑ |
+|:---|---:|---:|---:|---:|---:|---:|---:|
+| | *brief* | *brief* | *brief* | *dd256* | *dd256* | *dd256* | *dd256* |
+| baseline | 0.5433 | 0.0908 | 0.1595 | 0.5200 | 0.8269 | 0.4966 | 0.4484 |
+| control | 0.5799 | 0.1003 | 0.1525 | 0.5703 | 0.7885 | 0.4396 | 0.4529 |
+| **Cloc** | 0.6325 | 0.1212 | 0.1714 | 0.6187 | 0.7369 | 0.3698 | 0.5116 |
+| Clocorient ¹ | 0.6421 | 0.1279 | 0.1733 | 0.6312 | 0.7638 | 0.3656 | 0.5336 |
 
-| condition | axis released | $G_\mu$ | $\mathrm{tr}\Sigma_X$ | $r$ | $O_{16}$ |
+Brief captioning: MSCOCO `val2017`, 5,000 images. Detailed description (`dd256`): first 1,300
+images. Cloc improves on the control by +0.0526 [0.049, 0.056] CLIPScore on brief captions and on
+the baseline by +0.099 [0.091, 0.106] on detailed descriptions (95 % paired bootstrap intervals over
+images). On brief captions, CHAIR<sub>i</sub> falls from the baseline's 0.4811 to 0.3490.
+
+¹ Clocorient drives location and orientation together, so its extra gain cannot be attributed to
+either property.
+
+### One property at a time
+
+Geometry each condition reached (n = 5,000; bold = driven property):
+
+| condition | property driven | $G_\mu$ | $\mathrm{tr}\,\Sigma_X$ | $r$ | $O_{16}$ |
 |:---|:---|---:|---:|---:|---:|
-| all-pinned | none (baseline) | 177.86 | 4252.7 | 36.99 | 0.0515 |
+| control | none | 177.86 | 4252.7 | 36.99 | 0.0515 |
 | Cloc | location | **30.97** | 4789.6 | 37.32 | 0.0519 |
 | Cscale1500 | scale | 177.74 | **1487.6** | 38.67 | 0.0435 |
 | Crank15 | shape | 177.81 | 4311.6 | **20.21** | 0.0517 |
 | Corient | orientation | 177.61 | 4578.8 | 35.95 | **0.1114** |
-| Clocorient | location + orientation | **11.72** | 4804.1 | 36.32 | **0.2993** |
 
-Each intervention moved its own axis by 45 % to 116 % while every off-target axis moved by at most
-16 %. The largest drift, Cloc's +12.6 % in total variance, bounds to roughly 12 % of its gain by
-extrapolating from the scale condition.
+Brief-set CLIPScore difference from the control:
 
-### Downstream effect
+| condition | Δ CLIPScore [95 % CI] | reading |
+|:---|:---|:---|
+| Cloc | +0.0526 [+0.049, +0.056] | location has the largest effect |
+| Cscale1500 | −0.0333 [−0.037, −0.030] | compressing the scale hurts every measure |
+| Crank15 | −0.0030 [−0.005, −0.001] | no clear effect (not significant after correction for multiple comparisons) |
+| Corient | +0.0151 [+0.013, +0.018] | small, and smaller with a second seed |
 
-Against all-pinned. Brief captioning, MSCOCO `val2017`, n = 5,000; CLIPScore differences with 95 %
-paired bootstrap intervals over images.
+Scale and shape change the geometry as much as location does, yet one hurts and the other changes
+almost nothing. The location gain is therefore not a generic effect of changing the decoder's input.
 
-| condition | CLIPScore | Δ vs all-pinned [95 % CI] | verdict |
-|:---|---:|:---|:---|
-| all-pinned | 0.5799 | | reference |
-| **Cloc** | **0.6325** | **+0.0526** [+0.0492, +0.0559] | **the lever** |
-| Cscale1500 | 0.5466 | −0.0333 [−0.0365, −0.0299] | the mirror |
-| Crank15 | 0.5769 | −0.0030 [−0.0055, −0.0007] | no effect that replicates ¹ |
-| Corient | 0.5950 | +0.0151 [+0.0124, +0.0178] | weak, about a third of location |
-| Clocorient | 0.6421 | +0.0622 [+0.0589, +0.0656] | confounded ² |
-
-Detailed description (`dd256`), n = 1,300:
-
-| condition | CLIPScore ↑ | CHAIR<sub>s</sub> ↓ | CHAIR<sub>i</sub> ↓ | recall ↑ | objects / caption |
-|:---|---:|---:|---:|---:|---:|
-| all-pinned | 0.5703 | 0.7885 | 0.4396 | 0.4529 | 8.69 |
-| **Cloc** | **0.6187** | **0.7369** | **0.3698** | **0.5116** | **8.98** |
-| Cscale1500 | 0.5255 | 0.8900 | 0.5941 | 0.3558 | 8.15 |
-| Crank15 | 0.5673 | 0.7923 | 0.4540 | 0.4595 | 9.17 |
-| Corient | 0.5787 | 0.7838 | 0.4481 | 0.4524 | 8.31 |
-
-**Location is a lever.** Closing the centroid distance is the only single-axis intervention that
-improves every measure. It lowers both hallucination rates while the model names *more* objects, so
-it is not a say-less trade. **Scale is the mirror:** compressing total variance moves every brief-set
-measure the other way. **Orientation**, the axis a contrastive objective controls most directly,
-returns about a third of the location effect.
-
-A perturbation that helps, one that hurts and one that does neither cannot all be generic disturbance
-of the decoder's input, so what matters is which axis moved. CLIPScore on both sets, SPICE and METEOR
-order the conditions identically: Clocorient > Cloc > Corient > all-pinned > Crank15 > Cscale1500.
-
-¹ Halving the effective rank shifts brief-set CLIPScore by −0.0030, 6 % of the location effect. The
-interval excludes zero but does not survive correction for the fifteen comparisons, and the effect
-is not resolved on `dd256`.
-² Clocorient's centroid also closes further, from 30.97 to 11.72, so its extra gain cannot be
-credited to orientation.
-
-### A qualitative example
+### Robustness
 
 <p align="center">
-  <img src="docs/img/qualitative.png" alt="A photograph of grazing zebras above six generated descriptions: the four conditions that leave the location gap open call the animals horses or describe a living room; the two location-driven conditions name the zebras" width="560">
+  <img src="docs/img/robustness.png" alt="CLIPScore difference from the control per condition on COCO and NoCaps, with 95 % intervals: location and location plus orientation clearly positive, orientation slightly positive, shape on zero, scale negative." width="420">
 </p>
 
-Every condition that leaves the location gap open calls the zebras horses, and compressing the scale
-abandons the scene for a living room. Both conditions driven by the location term name the zebras.
+- **Out of distribution.** On 300 NoCaps images (Open Images, disjoint from training) the pattern
+  holds: Cloc +0.0668 [0.053, 0.081] over the control.
+- **A second judge.** Re-scoring all captions with SigLIP keeps the same order of the four
+  single-property conditions on both test sets.
+- **A second seed.** Each condition is retrained with seed 1337 (data order and adapter
+  initialisation change; the Stage-1 connector is shared). Brief-set difference from the control
+  trained with the same seed:
 
-### Distance to a fully resourced reference
+| condition | CLIPScore (42 / 1337) | SPICE (42 / 1337) | METEOR (42 / 1337) |
+|:---|:---|:---|:---|
+| control (absolute) | 0.580 / 0.582 | 0.100 / 0.102 | 0.153 / 0.152 |
+| baseline | −0.037 / running | −0.010 / running | +0.007 / running |
+| Cloc | +0.053 / **+0.061** | +0.021 / +0.024 | +0.019 / +0.025 |
+| Corient | +0.015 / +0.004 | +0.008 / +0.002 | +0.005 / +0.004 |
+| Crank15 | −0.003 / running | −0.002 / running | −0.001 / running |
+| Cscale1500 | −0.033 / running | −0.011 / running | −0.007 / running |
 
-`dd256`, n = 1,300. LLaVA-1.5-7B is evaluated for inference only on the same protocol.
+### Tests of the objective
 
-| | steps | items | CLIPScore ↑ | CHAIR<sub>s</sub> ↓ | CHAIR<sub>i</sub> ↓ | recall ↑ | words |
-|:---|---:|---:|---:|---:|---:|---:|---:|
-| all-pinned | 450 | 14,400 | 0.5703 | 0.7885 | 0.4396 | 0.4529 | 94.9 |
-| Cloc | 450 | 14,400 | 0.6187 | 0.7369 | 0.3698 | 0.5116 | 100.1 |
-| Clocorient | 450 | 14,400 | 0.6312 | 0.7638 | 0.3656 | 0.5336 | 96.0 |
-| Cloc_long | 1,529 | 48,928 | 0.6886 | 0.7869 | 0.3314 | 0.6393 | 101.6 |
-| Cloc_80k | 2,500 | 80,000 | 0.7033 | 0.7762 | 0.3133 | 0.6675 | 103.9 |
-| LLaVA-1.5-7B (reference) | n/a | ≈ 1.2 M | 0.7910 | 0.5069 | 0.1518 | 0.7738 | 82.4 |
+- **Pooled vector, not `[CLS]`.** The same distance term on `[CLS]` moves the centroid distance only
+  from 245.46 to 210.64, against 24.03 on the pooled vector.
+- **Scale constraint.** Without it the distance term also compresses the cloud (total variance
+  4581.6 → 1723.0); that variant scores 0.6481 but moves three properties at once.
+- **Dose-response.** From the baseline through the control to two doses of the drive, the centroid
+  distance falls 245.46 → 177.81 → 80.59 → 29.61 and CLIPScore rises 0.5433 → 0.5797 → 0.6240 →
+  0.6337.
+- **No shortcut at inference.** Shifting the image tokens of a trained model towards the text
+  centroid helps only for small shifts (+0.035 at a quarter of the way, against −0.028 for a random
+  shift of the same size); at the full distance every caption comes out empty.
+- **No inference cost.** Cloc has the same parameters (7.07 B), checkpoint size and peak GPU memory
+  as the control.
 
-The best 450-step condition covers about a quarter of the distance from all-pinned to the reference
-on every measure: 28 % on CLIPScore, 26 % on CHAIR<sub>i</sub>, 25 % on recall. The reference differs
-in every advantageous dimension (336 px and 576 visual tokens, an instruction-tuned decoder, ~1.2 M
-samples); it is a reference, not a competitor.
+### Distance to a fully trained reference
 
-Geometry gives the sharper comparison. On the same 1,300 pairs the reference's normalised location
-gap is $\widehat G_\mu = 3.250$, wider than all-pinned's 2.727 and far from Cloc's 0.448: an order of
-magnitude more training data does not close this axis on its own.
+LLaVA-1.5-7B (same kind of architecture, larger inputs, instruction-tuned decoder, ~1.2 M samples)
+reaches 0.7910 CLIPScore, 0.1518 CHAIR<sub>i</sub> and 0.7738 recall on `dd256`. Released models keep
+the gap open: the normalised location gap $\widehat G_\mu$ is 2.19 for bakLLaVA, 2.95 for
+LLaVA-1.5-13B and 3.25 for LLaVA-1.5-7B, against 3.63 for our baseline and 0.45 for Cloc.
+
+### Qualitative examples
+
+Complete brief captions of four images by all seven conditions: two large gains for Cloc, a typical
+gain and a failure. Red marks a wrong object, green a correct main object.
+
+<p align="center">
+  <img src="docs/img/qualitative.png" alt="Table of four images (a cat watching TV, a church with a clock tower, a cross-country skier, an airplane next to a flag) with the brief caption of each of the seven conditions and its CLIPScore." width="860">
+</p>
 
 ---
 
@@ -202,55 +191,47 @@ magnitude more training data does not close this axis on its own.
 
 | regime | data | metrics |
 |:---|:---|:---|
-| Brief captioning | MSCOCO `val2017`, 5,000 images, 64 new tokens | CLIPScore, SPICE, METEOR |
+| Brief captioning | MSCOCO `val2017`, 5,000 images, 64 new tokens | CLIPScore, SPICE, METEOR (BLEU-4, CIDEr in the main table only) |
 | Detailed description (`dd256`) | first 1,300 of `val2017`, 256 new tokens | CLIPScore, CHAIR<sub>s</sub>, CHAIR<sub>i</sub>, object recall |
+| Out of distribution | NoCaps, 300 images | CLIPScore, SigLIP |
 
-CLIPScore is computed with ViT-B/32, not the model's own ViT-L/14, so the judge is not the tower
-that produced the features. SPICE and METEOR compare against human references, and CHAIR counts
-objects named but absent from the COCO annotation. n-gram metrics are not used on `dd256`, because
-they need short reference captions.
+CLIPScore uses ViT-B/32, not the model's own ViT-L/14, so the judge is not the encoder that produced
+the features. All differences carry 95 % paired bootstrap intervals over images (10,000 resamples).
 
----
+## Limits
 
-## What this budget leaves open
-
-- 450 optimizer steps on a single 11 GB GPU. The models are instruments for an attribution, not
-  competitive captioners, and every claim is a contrast between conditions sharing that budget
-  exactly. An effect at this budget shows an axis is live; a null is the weaker claim.
-- One training seed per condition. The intervals above describe variation across evaluation images,
-  not across training runs.
-- Only the location drive was carried past 450 steps, so the longer rungs have no matched
-  all-pinned control at 1,529 or 2,500 steps.
-- One architecture and one vision tower, and captioning only.
+- One architecture (CLIP ViT-L/14 + LLaMA-2-7B), image captioning only.
+- A short training budget: 450 Stage-2 steps (about 14,400 samples) on one 11 GB GPU. The models are
+  instruments for an attribution, not competitive captioners.
+- Longer Cloc runs (48.9 k and 80 k samples) have no control trained as long.
 
 ---
 
 ## Repository layout
 
 ```
-configs/      YAML for encoders, projector, LLM, both training stages and the eval regimes
+configs/      encoders, connector, LLM, both training stages and the evaluation regimes
 src/
-  encoders/     frozen CLIP wrapper
-  models/       connector, VLM splice, checkpoint I/O
-  training/     stage 1 and stage 2 loops, geometry objectives
-  diagnostics/  projected-embedding extraction, the 20-statistic suite, plots
-  evaluation/   captioning and scoring helpers
-  data/         COCO, Bunny, LLaVA-Instruct, DOCCI loaders
-scripts/      numbered pipeline steps (03 gap, 05/06 train, 08 caption, 15 CLIPScore, 19 CHAIR, ...)
-              plus the Slurm submission scripts for each condition
-demo/         live side-by-side demo (see README_DEMO.md)
-outputs/      checkpoints, predictions, metrics, logs
+  encoders/     frozen CLIP image and text towers
+  models/       connector, VLM assembly, checkpoint I/O
+  training/     Stage 1 and Stage 2 loops and the geometry objectives
+  diagnostics/  projected-embedding extraction, gap statistics, plots
+  captioning/   generation and scoring helpers
+  data/         COCO, Bunny-v1.1 and LLaVA-Instruct loaders
+scripts/      numbered pipeline steps and the Slurm launchers for each condition
+  paper_figures/  scripts that produce the paper's figures and appendix table
+docs/img/     figures used in this README
 tests/        unit tests
 ```
 
 ## Reproducing
 
 ```bash
-bash scripts/00_setup_env.sh          # Python 3.10, CUDA 12.1; uv preferred
+bash scripts/00_setup_env.sh          # Python 3.10, CUDA 12.1
 bash scripts/01_download_data.sh
 
 python scripts/05_train_stage1.py --config configs/training_stage1.yaml
-python scripts/06_train_stage2.py --config configs/training_stage2.yaml
+python scripts/06_train_stage2.py --config configs/training_stage2.yaml      # baseline
 
 python scripts/07_extract_projected.py --condition <tag>
 python scripts/03_compute_gap.py       --condition <tag>
@@ -259,11 +240,10 @@ python scripts/15_clipscore.py         --condition <tag>
 python scripts/19_chair.py             --conditions <tag> --baseline C3pinr_dd256
 ```
 
-The single-axis conditions are trained by `scripts/17_train_c5_distance.py` (Cloc) and
-`scripts/18_train_c6_orientation_pinned.py` (all-pinned, Cscale1500, Crank15, Corient, Clocorient);
-the exact flags for each are in `scripts/submit_pooled.sbatch`. `15_clipscore.py` also writes
-per-image scores, which the paired bootstrap above uses. `java` is required on `PATH` for METEOR and
-SPICE.
+Cloc is trained by `scripts/17_train_c5_distance.py`; the control, Cscale1500, Crank15, Corient and
+Clocorient by `scripts/18_train_c6_orientation_pinned.py`. The exact flags for every condition are in
+`scripts/submit_tierb_seed.sbatch`, which also runs the second seed (`COND=<condition> SEED=1337`).
+`java` is required on `PATH` for METEOR and SPICE.
 
 ---
 
@@ -279,7 +259,7 @@ licence. All rights in them are reserved by the author.
 
 Vendored third-party files retain their original licences; see `THIRD_PARTY_LICENSES.md`.
 
-If you use this code or results derived from it, please cite the thesis. `CITATION.cff`
-carries the machine-readable record, and GitHub's "Cite this repository" button reads it.
+If you use this code or results derived from it, please cite it. `CITATION.cff` carries the
+machine-readable record, and GitHub's "Cite this repository" button reads it.
 
 Copyright (c) 2026 Hassine El Ghazel.

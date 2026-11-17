@@ -1,0 +1,242 @@
+{
+ "533536": {
+  "C3_stage2": {
+   "cap": "The image shows a cat sitting on a couch, looking at the camera with a curious expression.",
+   "clip": 0.623
+  },
+  "C3pinr": {
+   "cap": "The image features a cat sitting on a chair, with its head resting on the arm of the chair. The cat is facing the camera, and it appears to be enjoying the attention. The chair is a wooden chair with a floral pattern, and the cat is positioned on the armrest.",
+   "clip": 0.442
+  },
+  "Cscale1500": {
+   "cap": "The image shows a cat sitting on a chair in a living room. The cat is facing the camera, and it appears to be looking at something or someone in the room. The chair is a comfortable spot for the cat to sit and observe its surroundings.",
+   "clip": 0.542
+  },
+  "Crank15": {
+   "cap": "The image features a cat sitting on a chair, with its head resting on the arm of the chair. The cat is facing the camera, and it appears to be looking at something or someone. The chair is located in a room with a window, and there is a window curtain in the background.",
+   "clip": 0.479
+  },
+  "Corient": {
+   "cap": "The image features a cat sitting on a chair in a living room. The cat is facing the camera, and it appears to be looking at something or someone in the room. The chair is a comfortable and inviting spot for the cat to sit and relax.",
+   "clip": 0.515
+  },
+  "Cloc": {
+   "cap": "The image features a cat sitting on a couch, watching a television. The cat is facing the television, and it appears to be enjoying the show.",
+   "clip": 0.784
+  },
+  "Clocorient": {
+   "cap": "The image features a cat sitting on a chair, with its head resting on a table. The cat is looking directly at the camera, and its eyes are focused on the viewer. The cat is also wearing a collar, which adds to its overall appearance.",
+   "clip": 0.571
+  }
+ },
+ "284991": {
+  "C3_stage2": {
+   "cap": "The image shows a man sitting at a table with a laptop, typing on it. He is wearing a blue shirt and is surrounded by various objects, including a cup, a cell phone, and a pen.",
+   "clip": 0.556
+  },
+  "C3pinr": {
+   "cap": "The image features a man standing on a boat, holding a fishing rod and a fishing pole. He is standing on the deck of the boat, which is docked at a pier. The man is looking out over the water, possibly searching for fish.",
+   "clip": 0.432
+  },
+  "Cscale1500": {
+   "cap": "The image shows a man standing on a boat, holding a fishing rod and a fishing pole. He is standing on the edge of the boat, which is docked at a pier. The man is looking out over the water, possibly searching for fish.",
+   "clip": 0.403
+  },
+  "Crank15": {
+   "cap": "The image features a man standing on a boat, holding a fishing rod and a fishing pole. He is standing on the deck of the boat, which is docked at a pier. The man is looking out over the water, possibly searching for fish.",
+   "clip": 0.432
+  },
+  "Corient": {
+   "cap": "The image shows a man standing on a boat, holding a fishing rod and a fishing pole. He is standing on the deck of the boat, which is docked at a pier. The pier is located on a river, and the man is surrounded by other boats and people.",
+   "clip": 0.413
+  },
+  "Cloc": {
+   "cap": "The image shows a man sitting in a car, holding a cup of coffee and a cell phone. He is wearing a blue shirt and is looking out the window, possibly enjoying the view or waiting for something.",
+   "clip": 0.79
+  },
+  "Clocorient": {
+   "cap": "The image features a man sitting in a car, holding a cup of coffee. He is wearing a blue shirt and is looking out the window. The car is parked on a street, and there is a person standing next to the car, possibly waiting for the man to finish his coffee.",
+   "clip": 0.724
+  }
+ },
+ "56545": {
+  "C3_stage2": {
+   "cap": "The image shows a group of people standing in a room, with a large bird cage in the center. The cage is filled with colorful parrots, and there are several people in the room, some of them holding parrots.",
+   "clip": 0.312
+  },
+  "C3pinr": {
+   "cap": "The image features a large bird perched on a tree branch, with its wings spread out. The bird is positioned in a way that it appears to be looking down at the ground below. The bird's wings are spread out, giving it a majestic and impressive appearance.",
+   "clip": 0.629
+  },
+  "Cscale1500": {
+   "cap": "The image features a man standing in a room with a large bird perched on his shoulder. The bird is a white dove, which is a symbol of peace and purity. The man is holding the dove in his arms, and he appears to be looking at the camera.",
+   "clip": 0.431
+  },
+  "Crank15": {
+   "cap": "The image features a large bird perched on a tree branch, with its wings spread out. The bird is positioned in a way that it appears to be looking down at the ground below. The bird's wings are spread out, giving it a majestic and powerful appearance.",
+   "clip": 0.618
+  },
+  "Corient": {
+   "cap": "The image features a large bird, possibly a hawk, perched on a tree branch. The bird is facing away from the camera, with its wings spread out and its head turned to the side. The tree branch is surrounded by leaves, creating a natural and serene setting.",
+   "clip": 0.695
+  },
+  "Cloc": {
+   "cap": "The image features a bird perched on a branch, with its wings spread out and its beak open, looking upward. The bird is surrounded by a lush green forest, creating a serene and natural setting.",
+   "clip": 0.654
+  },
+  "Clocorient": {
+   "cap": "The image features a bird perched on a tree branch, with its wings spread out and its beak pointing upwards. The bird is surrounded by a lush green forest, creating a beautiful and serene scene.",
+   "clip": 0.636
+  }
+ },
+ "469174": {
+  "C3_stage2": {
+   "cap": "The image shows a group of people standing on a grassy field, with a large airplane in the background. The people are holding American flags, and there are several other flags visible in the scene.",
+   "clip": 0.751
+  },
+  "C3pinr": {
+   "cap": "The image features a large American flag flying in the sky, with a small airplane flying nearby. The flag is attached to a pole, and the airplane is positioned in the background. The scene is set against a blue sky, and there are several other airplanes in the distance.",
+   "clip": 0.85
+  },
+  "Cscale1500": {
+   "cap": "The image features a man standing in front of a large airplane, possibly a Boeing 737, which is parked on a runway. The man is holding a flag, possibly a flag of the United States, and is standing in front of the plane.",
+   "clip": 0.752
+  },
+  "Crank15": {
+   "cap": "The image features a large American flag flying in the sky, with a small airplane flying nearby. The flag is attached to a pole, and the airplane is positioned in the background. The scene is set against a blue sky, and there are several clouds in the sky.",
+   "clip": 0.845
+  },
+  "Corient": {
+   "cap": "The image features a large airplane flying in the sky, with a flag waving in the wind. The flag is attached to a pole that is attached to the top of the airplane. The airplane is flying over a field, with a few people visible in the background.",
+   "clip": 0.847
+  },
+  "Cloc": {
+   "cap": "The image features a large field with a grassy area and a few trees, surrounded by a fence. There are several airplanes flying in the sky, creating a beautiful and serene atmosphere. The airplanes are flying in a formation, creating a sense of unity and harmony.",
+   "clip": 0.648
+  },
+  "Clocorient": {
+   "cap": "The image features a large airplane flying over a field with a flag in the background. The airplane is flying in a straight line, and the flag is waving in the wind. The field is surrounded by trees, and there are several people standing on the field, possibly watching the airplane fly by.",
+   "clip": 0.819
+  }
+ },
+ "132622": {
+  "C3_stage2": {
+   "cap": "A brown and white dog is lying on a bed of snow, with its head resting on a pillow. The dog is looking up, and the scene is set in a snowy, wintery environment.",
+   "clip": 0.42
+  },
+  "C3pinr": {
+   "cap": "The image features a brown horse standing in a field, with its head turned to the side and its mouth open. The horse is grazing on the grass, and it appears to be enjoying the outdoor setting. The scene is surrounded by trees, creating a natural and serene atmosphere.",
+   "clip": 0.413
+  },
+  "Cscale1500": {
+   "cap": "The image features a brown horse standing in a field, with its head turned to the side and its mouth open. The horse is surrounded by a group of other horses, some of which are also facing the camera. The scene is set in a grassy field, with a few trees scattered around.",
+   "clip": 0.429
+  },
+  "Crank15": {
+   "cap": "The image features a brown horse standing in a field, with its head turned to the left. The horse is grazing on the grass, and it appears to be enjoying the outdoor setting. The scene is surrounded by trees, creating a natural and serene atmosphere.",
+   "clip": 0.398
+  },
+  "Corient": {
+   "cap": "The image features a brown and white horse standing in a field with a black and white dog. The dog is standing on the horse's back, and the horse is looking at the dog with curiosity. The scene is set in a snowy environment, with snow covering the ground and the surrounding area.",
+   "clip": 0.359
+  },
+  "Cloc": {
+   "cap": "The image shows a brown bear standing on a snowy mountain, with its head turned to the side and its mouth open. The bear is looking away from the camera, and its fur is visible in the snow.",
+   "clip": 0.728
+  },
+  "Clocorient": {
+   "cap": "The image features a brown bear standing on a snowy field, with its head down and its mouth open. The bear is looking at a camera, possibly posing for a photo. The bear is surrounded by snow, and there are trees in the background.",
+   "clip": 0.702
+  }
+ },
+ "476514": {
+  "C3_stage2": {
+   "cap": "The image shows a group of people, including a man and a woman, standing in a room with a white couch and a white chair. They are all smiling and posing for the camera.",
+   "clip": 0.508
+  },
+  "C3pinr": {
+   "cap": "The image features a woman standing in a field of flowers, surrounded by a group of horses. She is wearing a white dress and holding a bouquet of flowers. The scene is set against a backdrop of greenery and a blue sky. The woman is smiling and appears to be enjoying the moment.",
+   "clip": 0.525
+  },
+  "Cscale1500": {
+   "cap": "The image features a group of people gathered in a large room, possibly a ballroom or a large hall. There are several people in the room, some of whom are standing and others sitting on chairs. The scene is lively and vibrant, with people conversing and interacting with each other.",
+   "clip": 0.377
+  },
+  "Crank15": {
+   "cap": "The image features a group of people gathered in a park, enjoying a picnic. There are several people sitting on the grass, some of them holding cups, and others standing around. The scene is lively and vibrant, with people interacting and enjoying each other's company.",
+   "clip": 0.374
+  },
+  "Corient": {
+   "cap": "The image features a woman standing on a white stage, wearing a white dress and holding a bouquet of flowers. She is surrounded by a group of people, some of whom are holding bouquets as well. The scene is set in a large, open space, with a red carpet on the floor.",
+   "clip": 0.587
+  },
+  "Cloc": {
+   "cap": "The image features a woman in a white dress standing in a field of flowers, holding a bouquet of flowers. She is surrounded by a group of people, including a man and a woman, who are all smiling and posing for the camera.",
+   "clip": 0.613
+  },
+  "Clocorient": {
+   "cap": "The image features a woman wearing a white dress and a black hat, standing in front of a large, colorful flower arrangement. She is holding a bouquet of flowers, which is likely a gift for someone special. The woman is smiling and appears to be enjoying the moment.",
+   "clip": 0.507
+  }
+ },
+ "38210": {
+  "C3_stage2": {
+   "cap": "The image shows a group of people skiing down a snowy mountain slope, with a snowboarder in the foreground and a skier in the background.",
+   "clip": 0.584
+  },
+  "C3pinr": {
+   "cap": "The image features a snowy winter scene with a man and a dog standing on a snow-covered hill. The man is holding a ski pole, and the dog is standing next to him. The scene is surrounded by trees, creating a peaceful and serene atmosphere.",
+   "clip": 0.63
+  },
+  "Cscale1500": {
+   "cap": "The image features a man standing on a snowy slope, holding a snowboard and wearing a helmet. He is surrounded by snow-covered trees, creating a beautiful winter scene. The man is preparing to ride down the slope, ready to enjoy the snowy adventure.",
+   "clip": 0.599
+  },
+  "Crank15": {
+   "cap": "The image features a snow-covered ski slope with a skier in the middle of the scene. The skier is wearing a helmet and is surrounded by snow-covered trees. The skier is moving down the slope, and the scene is set against a blue sky.",
+   "clip": 0.634
+  },
+  "Corient": {
+   "cap": "The image features a snowy winter scene with a man and a dog standing on a snow-covered hill. The man is holding a ski pole, and the dog is standing next to him. The scene is set against a backdrop of snow-covered trees and mountains.",
+   "clip": 0.641
+  },
+  "Cloc": {
+   "cap": "The image features a man skiing down a snowy mountain slope, with snowflakes falling around him. He is wearing a helmet and a ski jacket, and he appears to be enjoying the winter sports activity.",
+   "clip": 0.697
+  },
+  "Clocorient": {
+   "cap": "The image features a snowy scene with a man and a dog skiing down a snowy slope. The man is wearing a red jacket and a helmet, while the dog is wearing a red collar. Both are enjoying the snowy conditions and the outdoor activity.",
+   "clip": 0.685
+  }
+ },
+ "402334": {
+  "C3_stage2": {
+   "cap": "The image shows a group of people gathered in a room, with a man standing in the center of the group. They are all looking at a large, colorful, and detailed painting hanging on the wall.",
+   "clip": 0.404
+  },
+  "C3pinr": {
+   "cap": "The image features a large, modern building with a large clock tower on top. The building is located in a city, and it is surrounded by other tall buildings. The clock tower is visible from a distance, and it is a prominent feature of the city skyline.",
+   "clip": 0.633
+  },
+  "Cscale1500": {
+   "cap": "The image shows a group of people gathered in a church, with a man standing in the center of the group. The church is decorated with a large cross on the wall, and there are several people standing around the cross. The scene is likely a religious gathering or a church service.",
+   "clip": 0.636
+  },
+  "Crank15": {
+   "cap": "The image features a large, modern, and well-lit building with a large clock tower. The building is located in a city, and it is surrounded by other tall buildings. The clock tower is visible from a distance, and it is a prominent feature of the building. The scene is bustling with activity,",
+   "clip": 0.635
+  },
+  "Corient": {
+   "cap": "The image shows a large, modern, and well-lit building with a large clock tower in the center. The building is located in a city, and it is surrounded by other tall buildings. The clock tower is visible from a distance, and it is a prominent feature of the city skyline.",
+   "clip": 0.635
+  },
+  "Cloc": {
+   "cap": "The image shows a church with a tall steeple and a clock tower, surrounded by a large group of people. The people are gathered in the church, some of them standing in the front, while others are scattered throughout the scene.",
+   "clip": 0.715
+  },
+  "Clocorient": {
+   "cap": "The image shows a church with a tall steeple, surrounded by a large group of people. The church is located in a city, and the people are gathered in the area, possibly for a religious event or a special occasion.",
+   "clip": 0.756
+  }
+ }
+}
