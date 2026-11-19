@@ -1,0 +1,7 @@
+{
+  "n_evaluated": 5000,
+  "siglip_model": "google/siglip-base-patch16-224",
+  "SigLIPScore": 0.0035433846060186625,
+  "SigLIPScore_std": 0.06227649375796318,
+  "mean_sigmoid_prob": 0.026281336322426796
+}

@@ -1,0 +1,798 @@
+{
+  "config": {
+    "conditions": [
+      "constrained_baseline_long",
+      "Cscale1500_long",
+      "Crank20_long",
+      "Corient_long",
+      "Cloc_long",
+      "Clocorient_long",
+      "location_drive_pooled_lambda0.1_scale_constrained_long",
+      "C4bp_lam0p9_dd256",
+      "Cloc_48.9k_items_long",
+      "Cloc_80k_items_long"
+    ],
+    "baseline": "constrained_baseline_long",
+    "gt_source": "segments+captions",
+    "n_images": 1300,
+    "n_bootstrap": 1000,
+    "seed": 42,
+    "synonyms": "scripts/chair_synonyms.txt",
+    "instances": "data/coco/annotations/instances_val2017.json"
+  },
+  "per_condition": {
+    "constrained_baseline_long": {
+      "chair_s": 0.7884615384615384,
+      "chair_i": 0.43955362678239307,
+      "recall": 0.45286594031264804,
+      "objs_per_cap": 8.685384615384615,
+      "avg_len": 94.92923076923077,
+      "ci95": {
+        "chair_s": [
+          0.7676923076923077,
+          0.8084807692307692
+        ],
+        "chair_i": [
+          0.420214252259914,
+          0.4579960664439888
+        ],
+        "recall": [
+          0.43823925324255353,
+          0.4671021005932708
+        ],
+        "objs_per_cap": [
+          8.509942307692308,
+          8.852365384615384
+        ],
+        "avg_len": [
+          93.98763461538462,
+          95.90365384615384
+        ]
+      }
+    },
+    "Cscale1500_long": {
+      "chair_s": 0.89,
+      "chair_i": 0.5940948967078578,
+      "recall": 0.35575556608242537,
+      "objs_per_cap": 8.154615384615385,
+      "avg_len": 76.74538461538461,
+      "ci95": {
+        "chair_s": [
+          0.8730769230769231,
+          0.9053846153846153
+        ],
+        "chair_i": [
+          0.5749283236320186,
+          0.613528176990476
+        ],
+        "recall": [
+          0.34173511426567293,
+          0.3683824456746871
+        ],
+        "objs_per_cap": [
+          7.993038461538461,
+          8.323115384615384
+        ],
+        "avg_len": [
+          75.61253846153846,
+          78.06925
+        ]
+      },
+      "delta_vs_baseline": {
+        "chair_s": {
+          "delta": 0.10153846153846158,
+          "ci95": [
+            0.0784423076923077,
+            0.12692307692307692
+          ]
+        },
+        "chair_i": {
+          "delta": 0.15454126992546469,
+          "ci95": [
+            0.13504737259219352,
+            0.17365033588880646
+          ]
+        },
+        "recall": {
+          "delta": -0.09711037423022267,
+          "ci95": [
+            -0.11152873778405877,
+            -0.08126650379547173
+          ]
+        },
+        "objs_per_cap": {
+          "delta": -0.5307692307692307,
+          "ci95": [
+            -0.7461730769230779,
+            -0.3014423076923078
+          ]
+        },
+        "avg_len": {
+          "delta": -18.18384615384616,
+          "ci95": [
+            -19.564826923076918,
+            -16.64682692307692
+          ]
+        }
+      }
+    },
+    "Crank20_long": {
+      "chair_s": 0.7923076923076923,
+      "chair_i": 0.4539655895929501,
+      "recall": 0.45949786830885836,
+      "objs_per_cap": 9.165384615384616,
+      "avg_len": 98.04153846153847,
+      "ci95": {
+        "chair_s": [
+          0.7684615384615384,
+          0.8130961538461537
+        ],
+        "chair_i": [
+          0.43462359324649635,
+          0.4726377702481947
+        ],
+        "recall": [
+          0.44493429115223887,
+          0.47360361417507624
+        ],
+        "objs_per_cap": [
+          8.973038461538462,
+          9.360788461538462
+        ],
+        "avg_len": [
+          97.14842307692307,
+          98.90878846153846
+        ]
+      },
+      "delta_vs_baseline": {
+        "chair_s": {
+          "delta": 0.0038461538461538325,
+          "ci95": [
+            -0.018461538461538418,
+            0.02384615384615374
+          ]
+        },
+        "chair_i": {
+          "delta": 0.01441196281055701,
+          "ci95": [
+            0.0023646271775126155,
+            0.026877778853397167
+          ]
+        },
+        "recall": {
+          "delta": 0.006631927996210318,
+          "ci95": [
+            -0.004740233998950971,
+            0.017853621898106263
+          ]
+        },
+        "objs_per_cap": {
+          "delta": 0.4800000000000004,
+          "ci95": [
+            0.3053653846153837,
+            0.6630769230769218
+          ]
+        },
+        "avg_len": {
+          "delta": 3.112307692307695,
+          "ci95": [
+            1.9857499999999941,
+            4.199692307692304
+          ]
+        }
+      }
+    },
+    "Corient_long": {
+      "chair_s": 0.7838461538461539,
+      "chair_i": 0.44814506429826995,
+      "recall": 0.4523922311700616,
+      "objs_per_cap": 8.314615384615385,
+      "avg_len": 93.41,
+      "ci95": {
+        "chair_s": [
+          0.76075,
+          0.8053846153846154
+        ],
+        "chair_i": [
+          0.42754864545938465,
+          0.46718918164178214
+        ],
+        "recall": [
+          0.43790995042994685,
+          0.4658502253159765
+        ],
+        "objs_per_cap": [
+          8.124557692307693,
+          8.4985
+        ],
+        "avg_len": [
+          92.09296153846154,
+          94.71028846153845
+        ]
+      },
+      "delta_vs_baseline": {
+        "chair_s": {
+          "delta": -0.004615384615384577,
+          "ci95": [
+            -0.026942307692307706,
+            0.017692307692307785
+          ]
+        },
+        "chair_i": {
+          "delta": 0.008591437515876876,
+          "ci95": [
+            -0.00910832628908894,
+            0.026690580784367892
+          ]
+        },
+        "recall": {
+          "delta": -0.0004737091425864315,
+          "ci95": [
+            -0.015112881582554584,
+            0.013191465784718168
+          ]
+        },
+        "objs_per_cap": {
+          "delta": -0.3707692307692305,
+          "ci95": [
+            -0.5907884615384602,
+            -0.15532692307692192
+          ]
+        },
+        "avg_len": {
+          "delta": -1.5192307692307736,
+          "ci95": [
+            -3.124634615384612,
+            0.004769230769237113
+          ]
+        }
+      }
+    },
+    "Cloc_long": {
+      "chair_s": 0.7369230769230769,
+      "chair_i": 0.3698407261517383,
+      "recall": 0.5116058739933681,
+      "objs_per_cap": 8.983076923076924,
+      "avg_len": 100.13461538461539,
+      "ci95": {
+        "chair_s": [
+          0.713076923076923,
+          0.76
+        ],
+        "chair_i": [
+          0.35350709476502973,
+          0.38597551415339
+        ],
+        "recall": [
+          0.4972866774545609,
+          0.5257575615614342
+        ],
+        "objs_per_cap": [
+          8.77,
+          9.17003846153846
+        ],
+        "avg_len": [
+          99.21690384615385,
+          101.10553846153847
+        ]
+      },
+      "delta_vs_baseline": {
+        "chair_s": {
+          "delta": -0.05153846153846153,
+          "ci95": [
+            -0.07615384615384613,
+            -0.024615384615384595
+          ]
+        },
+        "chair_i": {
+          "delta": -0.06971290063065477,
+          "ci95": [
+            -0.08815398996796187,
+            -0.054181173454893844
+          ]
+        },
+        "recall": {
+          "delta": 0.05873993368072006,
+          "ci95": [
+            0.04479469711919831,
+            0.0730305262095224
+          ]
+        },
+        "objs_per_cap": {
+          "delta": 0.2976923076923086,
+          "ci95": [
+            0.08609615384615457,
+            0.5169423076923069
+          ]
+        },
+        "avg_len": {
+          "delta": 5.205384615384617,
+          "ci95": [
+            3.9574038461538508,
+            6.446538461538463
+          ]
+        }
+      }
+    },
+    "Clocorient_long": {
+      "chair_s": 0.7638461538461538,
+      "chair_i": 0.3656311849238448,
+      "recall": 0.5336333491236381,
+      "objs_per_cap": 8.93923076923077,
+      "avg_len": 96.00153846153846,
+      "ci95": {
+        "chair_s": [
+          0.7422884615384616,
+          0.7853846153846153
+        ],
+        "chair_i": [
+          0.34782793621411756,
+          0.38281094377463637
+        ],
+        "recall": [
+          0.5190759385790599,
+          0.5466968007322613
+        ],
+        "objs_per_cap": [
+          8.749980769230769,
+          9.12698076923077
+        ],
+        "avg_len": [
+          95.04767307692308,
+          96.97159615384615
+        ]
+      },
+      "delta_vs_baseline": {
+        "chair_s": {
+          "delta": -0.024615384615384595,
+          "ci95": [
+            -0.05076923076923079,
+            0.0007884615384614954
+          ]
+        },
+        "chair_i": {
+          "delta": -0.0739224418585483,
+          "ci95": [
+            -0.09131970699492739,
+            -0.05893572557154064
+          ]
+        },
+        "recall": {
+          "delta": 0.0807674088109901,
+          "ci95": [
+            0.0667280566315929,
+            0.09461055266951364
+          ]
+        },
+        "objs_per_cap": {
+          "delta": 0.2538461538461547,
+          "ci95": [
+            0.041538461538461746,
+            0.444653846153847
+          ]
+        },
+        "avg_len": {
+          "delta": 1.0723076923076889,
+          "ci95": [
+            -0.1719038461538453,
+            2.290019230769223
+          ]
+        }
+      }
+    },
+    "location_drive_pooled_lambda0.1_scale_constrained_long": {
+      "chair_s": 0.7476923076923077,
+      "chair_i": 0.3776524082182553,
+      "recall": 0.5215537659876835,
+      "objs_per_cap": 9.135384615384615,
+      "avg_len": 100.82230769230769,
+      "ci95": {
+        "chair_s": [
+          0.724596153846154,
+          0.7707692307692308
+        ],
+        "chair_i": [
+          0.3608527081817727,
+          0.39512191272404734
+        ],
+        "recall": [
+          0.5070643884705853,
+          0.5357248934531111
+        ],
+        "objs_per_cap": [
+          8.936903846153845,
+          9.349269230769229
+        ],
+        "avg_len": [
+          99.84590384615385,
+          101.89925
+        ]
+      },
+      "delta_vs_baseline": {
+        "chair_s": {
+          "delta": -0.04076923076923078,
+          "ci95": [
+            -0.06615384615384612,
+            -0.015384615384615438
+          ]
+        },
+        "chair_i": {
+          "delta": -0.06190121856413777,
+          "ci95": [
+            -0.07853067929271315,
+            -0.04441030876550379
+          ]
+        },
+        "recall": {
+          "delta": 0.06868782567503551,
+          "ci95": [
+            0.053875799337294694,
+            0.08369958417517069
+          ]
+        },
+        "objs_per_cap": {
+          "delta": 0.4499999999999993,
+          "ci95": [
+            0.22917307692307684,
+            0.6784807692307696
+          ]
+        },
+        "avg_len": {
+          "delta": 5.893076923076919,
+          "ci95": [
+            4.631480769230777,
+            7.162346153846154
+          ]
+        }
+      }
+    },
+    "C4bp_lam0p9_dd256": {
+      "chair_s": 0.7807692307692308,
+      "chair_i": 0.43563290571454205,
+      "recall": 0.4680246328754145,
+      "objs_per_cap": 8.574615384615385,
+      "avg_len": 97.09461538461538,
+      "ci95": {
+        "chair_s": [
+          0.7599615384615385,
+          0.803076923076923
+        ],
+        "chair_i": [
+          0.4151429417473178,
+          0.4545818183707358
+        ],
+        "recall": [
+          0.45338914114489504,
+          0.4815123270301091
+        ],
+        "objs_per_cap": [
+          8.376134615384615,
+          8.7585
+        ],
+        "avg_len": [
+          95.98455769230769,
+          98.22478846153847
+        ]
+      },
+      "delta_vs_baseline": {
+        "chair_s": {
+          "delta": -0.007692307692307665,
+          "ci95": [
+            -0.03076923076923077,
+            0.014615384615384586
+          ]
+        },
+        "chair_i": {
+          "delta": -0.0039207210678510185,
+          "ci95": [
+            -0.020396538524000384,
+            0.011695994666158966
+          ]
+        },
+        "recall": {
+          "delta": 0.015158692562766474,
+          "ci95": [
+            0.002372190875319219,
+            0.029462031435278715
+          ]
+        },
+        "objs_per_cap": {
+          "delta": -0.11076923076923073,
+          "ci95": [
+            -0.30700000000000016,
+            0.07926923076923026
+          ]
+        },
+        "avg_len": {
+          "delta": 2.1653846153846104,
+          "ci95": [
+            0.8179615384615343,
+            3.467596153846157
+          ]
+        }
+      }
+    },
+    "Cloc_48.9k_items_long": {
+      "chair_s": 0.786923076923077,
+      "chair_i": 0.3314223994682619,
+      "recall": 0.6392704879204169,
+      "objs_per_cap": 9.258461538461539,
+      "avg_len": 101.5576923076923,
+      "ci95": {
+        "chair_s": [
+          0.7661346153846155,
+          0.8084615384615385
+        ],
+        "chair_i": [
+          0.31774166659322217,
+          0.3446159310689682
+        ],
+        "recall": [
+          0.6241049774282754,
+          0.6543429318963891
+        ],
+        "objs_per_cap": [
+          9.066903846153846,
+          9.453903846153846
+        ],
+        "avg_len": [
+          100.84828846153846,
+          102.27213461538462
+        ]
+      },
+      "delta_vs_baseline": {
+        "chair_s": {
+          "delta": -0.0015384615384614886,
+          "ci95": [
+            -0.027692307692307683,
+            0.0254038461538462
+          ]
+        },
+        "chair_i": {
+          "delta": -0.10813122731413116,
+          "ci95": [
+            -0.1260995977335143,
+            -0.09127759133352359
+          ]
+        },
+        "recall": {
+          "delta": 0.1864045476077688,
+          "ci95": [
+            0.17116891606460063,
+            0.20357568495720044
+          ]
+        },
+        "objs_per_cap": {
+          "delta": 0.5730769230769237,
+          "ci95": [
+            0.3684423076923077,
+            0.787903846153847
+          ]
+        },
+        "avg_len": {
+          "delta": 6.628461538461536,
+          "ci95": [
+            5.526884615384621,
+            7.729365384615383
+          ]
+        }
+      }
+    },
+    "Cloc_80k_items_long": {
+      "chair_s": 0.7761538461538462,
+      "chair_i": 0.3132702552277968,
+      "recall": 0.6674561819043108,
+      "objs_per_cap": 9.674615384615384,
+      "avg_len": 103.90384615384616,
+      "ci95": {
+        "chair_s": [
+          0.7546153846153846,
+          0.796923076923077
+        ],
+        "chair_i": [
+          0.30045623801712623,
+          0.3273925833392851
+        ],
+        "recall": [
+          0.6521728993279066,
+          0.681295308617936
+        ],
+        "objs_per_cap": [
+          9.493057692307692,
+          9.873884615384615
+        ],
+        "avg_len": [
+          103.1215,
+          104.71896153846154
+        ]
+      },
+      "delta_vs_baseline": {
+        "chair_s": {
+          "delta": -0.012307692307692242,
+          "ci95": [
+            -0.039999999999999925,
+            0.015384615384615441
+          ]
+        },
+        "chair_i": {
+          "delta": -0.1262833715545963,
+          "ci95": [
+            -0.14420595696313476,
+            -0.10922294064959442
+          ]
+        },
+        "recall": {
+          "delta": 0.21459024159166273,
+          "ci95": [
+            0.19891412662058566,
+            0.23023707517308464
+          ]
+        },
+        "objs_per_cap": {
+          "delta": 0.9892307692307689,
+          "ci95": [
+            0.7907692307692322,
+            1.207692307692307
+          ]
+        },
+        "avg_len": {
+          "delta": 8.97461538461539,
+          "ci95": [
+            7.816115384615383,
+            10.102423076923074
+          ]
+        }
+      }
+    }
+  },
+  "sanity": {
+    "n_images_empty_gt": 5,
+    "baseline_chair_s": 0.7884615384615384,
+    "baseline_chair_s_in_expected_range": false,
+    "note": "baseline CHAIR_s outside the LLaVA-family ballpark [0.05,0.7] -> check the parser",
+    "examples_baseline": [
+      {
+        "image_id": 139,
+        "caption": "The image features a cozy living room with a large wooden dining table in the center. The table is surrounded by chairs, and there are several people seated at the table. The room is well-lit, with a lamp on the table and a window in the background. \n\nOn the table, there are several items, including a plate of food, a glass of wine, and a cup. A clock is also visible on the wall, adding to the sense of time and place. The room appears to be a comfortable and inviting space for social gatherings and meals.",
+        "gt_words": [
+          "book",
+          "chair",
+          "clock",
+          "dining table",
+          "microwave",
+          "person",
+          "potted plant",
+          "refrigerator",
+          "tv",
+          "vase"
+        ],
+        "gen_words": [
+          "dining table",
+          "dining table",
+          "chair",
+          "person",
+          "dining table",
+          "dining table",
+          "dining table",
+          "cup",
+          "clock"
+        ],
+        "hallucinated_words": [
+          "cup"
+        ]
+      },
+      {
+        "image_id": 285,
+        "caption": "The image features a brown and white dog sitting on a couch, with its head resting on a pillow. The dog is facing the camera, and it appears to be enjoying its comfortable position. The couch is located in a living room, and there is a television set visible in the background. The dog's presence in the living room suggests that it is a part of the family and is well-loved by its owners.",
+        "gt_words": [
+          "bear"
+        ],
+        "gen_words": [
+          "dog",
+          "couch",
+          "dog",
+          "couch",
+          "tv",
+          "dog"
+        ],
+        "hallucinated_words": [
+          "dog",
+          "couch",
+          "dog",
+          "couch",
+          "tv",
+          "dog"
+        ]
+      },
+      {
+        "image_id": 632,
+        "caption": "The image features a room with a desk and a chair. The desk is located in the center of the room, and a chair is placed near the desk. There is a window in the background, and a bookshelf is visible in the room. The room is well-lit, with a lamp on the desk and a lamp on the bookshelf.\n\nA laptop is placed on the desk, and a laptop bag is placed on the floor near the chair. There are several books on the bookshelf, and a few more books are scattered around the room. The room appears to be well-organized and tidy, with a sense of orderliness.",
+        "gt_words": [
+          "bed",
+          "book",
+          "chair",
+          "potted plant"
+        ],
+        "gen_words": [
+          "dining table",
+          "chair",
+          "dining table",
+          "chair",
+          "dining table",
+          "dining table",
+          "laptop",
+          "dining table",
+          "laptop",
+          "chair",
+          "book",
+          "book"
+        ],
+        "hallucinated_words": [
+          "dining table",
+          "dining table",
+          "dining table",
+          "dining table",
+          "laptop",
+          "dining table",
+          "laptop"
+        ]
+      },
+      {
+        "image_id": 724,
+        "caption": "The image features a man standing in front of a large, white, and modern building. He is holding a large, black umbrella, which is partially visible in the frame. The man is wearing a black jacket and a white shirt, and he appears to be looking down.\n\nThe building has a large, glass window on the left side, and there are several other windows on the right side. The building also has a large, black awning above the windows, which provides shade and protection from the sun. The awning is visible in the frame, and it covers the entire building.",
+        "gt_words": [
+          "car",
+          "stop sign",
+          "truck"
+        ],
+        "gen_words": [
+          "person",
+          "umbrella",
+          "person"
+        ],
+        "hallucinated_words": [
+          "person",
+          "umbrella",
+          "person"
+        ]
+      },
+      {
+        "image_id": 776,
+        "caption": "The image features a group of people gathered together in a room, with a dog in the center of the group. There are a total of 11 people in the room, including 10 adults and one child. The group is sitting on a couch, with some people sitting on the floor as well.\n\nThe room is well-lit, with a lamp on the floor and a light fixture hanging from the ceiling. There are several chairs and tables scattered around the room, and a few people are holding drinks. The atmosphere appears to be lively and social, with people interacting with each other and the dog.",
+        "gt_words": [
+          "bear",
+          "bed",
+          "teddy bear"
+        ],
+        "gen_words": [
+          "person",
+          "dog",
+          "person",
+          "person",
+          "person",
+          "couch",
+          "person",
+          "chair",
+          "dining table",
+          "person",
+          "person",
+          "dog"
+        ],
+        "hallucinated_words": [
+          "person",
+          "dog",
+          "person",
+          "person",
+          "person",
+          "couch",
+          "person",
+          "chair",
+          "dining table",
+          "person",
+          "person",
+          "dog"
+        ]
+      }
+    ]
+  }
+}

@@ -7,13 +7,13 @@ qualitative_captions.json (baseline CLIPScore recomputed with the same ViT-B/32 
 import json, sys, textwrap
 caps = json.load(open(__file__.rsplit("/", 1)[0] + "/qualitative_captions.json"))
 IMGW, NW, TW = 28, 15, 117
-CONDS = ["C3_stage2", "C3pinr", "Cscale1500", "Crank15", "Corient", "Cloc", "Clocorient"]
-NAME = {"C3_stage2": "baseline", "C3pinr": "control", "Cscale1500": "Cscale1500", "Crank15": "Crank15", "Corient": "Corient", "Cloc": "Cloc", "Clocorient": "Clocorient"}
+CONDS = ["C3_stage2", "C3pinr", "Cscale1500", "Crank20", "Corient", "Cloc", "Clocorient"]
+NAME = {"C3_stage2": "baseline", "C3pinr": "constrained baseline", "Cscale1500": "Cscale1500", "Crank20": "Crank20", "Corient": "Corient", "Cloc": "Cloc", "Clocorient": "Clocorient"}
 MARK = {
- "533536": {"C3_stage2": [("looking at the camera",0)], "C3pinr": [("facing the camera",0)], "Cscale1500": [("facing the camera",0)], "Crank15": [("facing the camera",0)], "Corient": [("facing the camera",0)], "Cloc": [("watching a television",1)], "Clocorient": [("looking directly at the camera",0)]},
- "402334": {"C3_stage2": [("a group of people gathered in a room",0)], "C3pinr": [("large, modern building",0), ("clock tower",1)], "Cscale1500": [("group of people gathered in a church",0)], "Crank15": [("large, modern, and well-lit building",0), ("clock tower",1)], "Corient": [("large, modern, and well-lit building",0), ("clock tower",1)], "Cloc": [("church with a tall steeple and a clock tower",1), ("surrounded by a large group of people",0)], "Clocorient": [("church with a tall steeple",1), ("surrounded by a large group of people",0)]},
- "38210": {"C3_stage2": [("snowboarder",0)], "C3pinr": [("a man and a dog",0)], "Cscale1500": [("holding a snowboard",0)], "Crank15": [("skier",1)], "Corient": [("a man and a dog",0)], "Cloc": [("man skiing down a snowy mountain slope",1)], "Clocorient": [("a man and a dog",0)]},
- "469174": {"C3_stage2": [("American flags",1)], "C3pinr": [("American flag",1)], "Cscale1500": [("holding a flag",1)], "Crank15": [("American flag",1)], "Corient": [("flag waving",1)], "Cloc": [("several airplanes flying in the sky",0)], "Clocorient": [("flag in the background",1)]},
+ "533536": {"C3_stage2": [("looking at the camera",0)], "C3pinr": [("facing the camera",0)], "Cscale1500": [("facing the camera",0)], "Crank20": [("facing the camera",0)], "Corient": [("facing the camera",0)], "Cloc": [("watching a television",1)], "Clocorient": [("looking directly at the camera",0)]},
+ "402334": {"C3_stage2": [("a group of people gathered in a room",0)], "C3pinr": [("large, modern building",0), ("clock tower",1)], "Cscale1500": [("group of people gathered in a church",0)], "Crank20": [("large, modern, and well-lit building",0), ("clock tower",1)], "Corient": [("large, modern, and well-lit building",0), ("clock tower",1)], "Cloc": [("church with a tall steeple and a clock tower",1), ("surrounded by a large group of people",0)], "Clocorient": [("church with a tall steeple",1), ("surrounded by a large group of people",0)]},
+ "38210": {"C3_stage2": [("snowboarder",0)], "C3pinr": [("a man and a dog",0)], "Cscale1500": [("holding a snowboard",0)], "Crank20": [("skier",1)], "Corient": [("a man and a dog",0)], "Cloc": [("man skiing down a snowy mountain slope",1)], "Clocorient": [("a man and a dog",0)]},
+ "469174": {"C3_stage2": [("American flags",1)], "C3pinr": [("American flag",1)], "Cscale1500": [("holding a flag",1)], "Crank20": [("American flag",1)], "Corient": [("flag waving",1)], "Cloc": [("several airplanes flying in the sky",0)], "Clocorient": [("flag in the background",1)]},
 }
 ORDER = ["533536", "402334", "38210", "469174"]
 SUB = f"@{{}}p{{{NW}mm}}|p{{{TW}mm}}|c@{{}}"

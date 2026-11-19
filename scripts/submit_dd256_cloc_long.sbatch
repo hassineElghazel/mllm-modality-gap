@@ -35,7 +35,7 @@ TAG="${TAG:-Cloc_long_dd256}"
 CKPT="${CKPT:-outputs/checkpoints/stage2_vlm_${TAG%_dd256}.pt}"
 CLIP_MODEL="${CLIP_MODEL:-$HOME/clip_b32}"
 BASE=C3pinr_dd256
-ALL="C3pinr_dd256 Cscale1500_dd256 Crank15_dd256 Corient_dd256 Cloc_dd256 Clocorient_dd256 C5bp_lam0p1_dd256 C4bp_lam0p9_dd256 Cloc_long_dd256 ${TAG}"
+ALL="C3pinr_dd256 Cscale1500_dd256 Crank20_dd256 Corient_dd256 Cloc_dd256 Clocorient_dd256 C5bp_lam0p1_dd256 C4bp_lam0p9_dd256 Cloc_long_dd256 ${TAG}"
 
 tg() { [[ -z "${TELEGRAM_BOT_TOKEN:-}" || -z "${TELEGRAM_CHAT_ID:-}" ]] && return 0
        curl -fsS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \

@@ -39,8 +39,8 @@ CONDITIONS = ("C0_random", "C1_stage2", "C2_stage1", "C3_stage1", "C3_stage2",
               "Cscale1500", "Cscale2500", "Cscale3500",
               # C3pinr = C3pin + rank-pin: rank-matched anchor (trace held at baseline, rank ~39):
               "C3pinr",
-              # Crank15 = single-axis RANK test: match C3pin loc+trace+orient, drive eff_rank down:
-              "Crank15",
+              # Crank20 = single-axis RANK test: match C3pin loc+trace+orient, drive eff_rank down:
+              "Crank20",
               # Cloc = clean-location: distance drive + scale-pin + rank-pin (isolate LOCATION,
               # hold scale AND rank) -> assumption-free location causality.
               "Cloc",
@@ -62,7 +62,8 @@ CONDITIONS = ("C0_random", "C1_stage2", "C2_stage1", "C3_stage1", "C3_stage2",
               # seed repeats of the attribution pair:
               "C3pinr_s1", "C3pinr_s2", "Cloc_s1", "Cloc_s2",
               # Tier B: second seed (1337) of the four single-axis arms:
-              "C3pinr_s1337", "Cloc_s1337", "Corient_s1337", "Crank15_s1337")
+              "C3pinr_s1337", "Cloc_s1337", "Corient_s1337", "Crank20_s1337",
+              "Cscale1500_s1337", "C3_stage2_s1337", "Clocorient_s1337")
 
 
 def _embed_paths(condition: str, embeddings_dir: Path) -> tuple[Path, Path]:

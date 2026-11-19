@@ -45,7 +45,7 @@ mkdir -p outputs/logs outputs/metrics outputs/predictions
 CFG="${CFG:-configs/ood_eval.yaml}"
 CLIP_MODEL="${CLIP_MODEL:-/nfs/home/elghazel/clip_b32}"
 # the 6 NOT yet run; Cloc and C3pinr already exist and are NOT repeated
-CONDS="${CONDS:-Cscale1500 Crank15 Corient Clocorient Cloc_long Cloc_80k}"
+CONDS="${CONDS:-Cscale1500 Crank20 Corient Clocorient Cloc_long Cloc_80k}"
 
 test -f data/nocaps/ood_eval_300.json || {
   echo "[fatal] data/nocaps/ood_eval_300.json missing -- run scripts/prep_ood_eval.py first" >&2

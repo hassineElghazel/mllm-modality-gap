@@ -1,0 +1,39 @@
+{
+  "condition": "constrained_baseline",
+  "checkpoint": "outputs/checkpoints/stage2_vlm_constrained_baseline.pt",
+  "n_timed": 500,
+  "n_warmup": 10,
+  "batch_size": 1,
+  "generation": {
+    "do_sample": false,
+    "num_beams": 1,
+    "max_new_tokens": 64
+  },
+  "params": {
+    "connector": 20979712,
+    "vision_encoder": 303179776,
+    "llm": 6744715264,
+    "lora": 6291456,
+    "total": 7068874752,
+    "trainable_at_serving": 27271168
+  },
+  "checkpoint_bytes": 327504525,
+  "checkpoint_mib": 312.3,
+  "model_load_seconds": 30.09,
+  "peak_vram_bytes": 6278283776,
+  "peak_vram_mib": 5987.4,
+  "vram_before_load_mib": 0.0,
+  "latency_ms": {
+    "p50": 8680.3,
+    "p95": 10866.1,
+    "p99": 12517.1,
+    "mean": 8375.5,
+    "min": 4616.1,
+    "max": 15389.4,
+    "stdev": 1590.0
+  },
+  "throughput_captions_per_s": 0.1194,
+  "wall_seconds": 4187.8,
+  "gpu": "NVIDIA GeForce RTX 2080 Ti",
+  "torch": "2.3.1+cu121"
+}

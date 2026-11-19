@@ -76,8 +76,8 @@ CONDITIONS = {
     "Cscale3500":  {"connector": "outputs/checkpoints/stage2_vlm_Cscale3500.pt",  "uses_stage2": True},
     # C3pinr = C3pin + rank-pin: rank-matched anchor (trace held at baseline, rank ~39).
     "C3pinr":      {"connector": "outputs/checkpoints/stage2_vlm_C3pinr.pt",      "uses_stage2": True},
-    # Crank15 = single-axis RANK test: match C3pin loc+trace+orient, drive eff_rank 32 -> ~15.
-    "Crank15":     {"connector": "outputs/checkpoints/stage2_vlm_Crank15.pt",     "uses_stage2": True},
+    # Crank20 = single-axis RANK test: match C3pin loc+trace+orient, drive eff_rank 32 -> ~15.
+    "Crank20":     {"connector": "outputs/checkpoints/stage2_vlm_Crank20.pt",     "uses_stage2": True},
     # Cloc = clean-location: distance drive + scale-pin + rank-pin (isolate LOCATION).
     "Cloc":        {"connector": "outputs/checkpoints/stage2_vlm_Cloc.pt",        "uses_stage2": True},
     # long annealed run of the method (subset-size sets the cosine horizon):
@@ -94,7 +94,7 @@ CONDITIONS = {
     "C3pinr_s1337":  {"connector": "outputs/checkpoints/stage2_vlm_C3pinr_s1337.pt",  "uses_stage2": True},
     "Cloc_s1337":    {"connector": "outputs/checkpoints/stage2_vlm_Cloc_s1337.pt",    "uses_stage2": True},
     "Corient_s1337": {"connector": "outputs/checkpoints/stage2_vlm_Corient_s1337.pt", "uses_stage2": True},
-    "Crank15_s1337": {"connector": "outputs/checkpoints/stage2_vlm_Crank15_s1337.pt", "uses_stage2": True},
+    "Crank20_s1337": {"connector": "outputs/checkpoints/stage2_vlm_Crank20_s1337.pt", "uses_stage2": True},
     "Cscale1500_s1337": {"connector": "outputs/checkpoints/stage2_vlm_Cscale1500_s1337.pt", "uses_stage2": True},
     "Clocorient_s1337": {"connector": "outputs/checkpoints/stage2_vlm_Clocorient_s1337.pt", "uses_stage2": True},
     "C3_stage2_s1337":  {"connector": "outputs/checkpoints/stage2_vlm_C3_stage2_s1337.pt",  "uses_stage2": True},

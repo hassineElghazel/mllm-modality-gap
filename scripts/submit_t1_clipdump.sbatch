@@ -26,8 +26,8 @@ cd ~/LLAMA_modality_gap
 mkdir -p outputs/logs outputs/metrics
 
 CLIP_MODEL="${CLIP_MODEL:-/nfs/home/elghazel/clip_b32}"
-BRIEF="${BRIEF:-C3pinr Cloc Cscale1500 Crank15 Corient Clocorient}"
-DD256="${DD256:-C3pinr_dd256 Cloc_dd256 Cscale1500_dd256 Crank15_dd256 Corient_dd256 Clocorient_dd256}"
+BRIEF="${BRIEF:-C3pinr Cloc Cscale1500 Crank20 Corient Clocorient}"
+DD256="${DD256:-C3pinr_dd256 Cloc_dd256 Cscale1500_dd256 Crank20_dd256 Corient_dd256 Clocorient_dd256}"
 OOD="${OOD:-C3pinr_ood Cloc_ood}"
 
 python -c "

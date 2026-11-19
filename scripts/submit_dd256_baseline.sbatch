@@ -58,7 +58,7 @@ fi
 
 # --- 3. CHAIR on dd256: baseline alongside the existing conditions, to a new file ---
 KEEP=""
-for t in C3_stage2_dd256 C3pinr_dd256 Cloc_dd256 Cscale1500_dd256 Crank15_dd256 Corient_dd256 Clocorient_dd256; do
+for t in C3_stage2_dd256 C3pinr_dd256 Cloc_dd256 Cscale1500_dd256 Crank20_dd256 Corient_dd256 Clocorient_dd256; do
   [[ -f "outputs/predictions/captions_${t}.json" ]] && KEEP="${KEEP} ${t}" || echo "[skip] ${t} (no predictions)"
 done
 python scripts/19_chair.py --conditions ${KEEP} --baseline C3pinr_dd256 --config "$CFG" --out "$OUT"

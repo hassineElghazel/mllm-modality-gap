@@ -1,0 +1,8 @@
+{
+  "n_evaluated": 5000,
+  "clip_model": "clip_b32",
+  "w": 2.5,
+  "CLIPScore": 0.5765396952629089,
+  "CLIPScore_std": 0.1238008439540863,
+  "mean_cosine": 0.23061586916446686
+}

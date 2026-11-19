@@ -189,20 +189,20 @@ run_one() {
 #
 # RUN 1 = C3pinr (LAUNCHED): the fully-pinned baseline (doubles as the trace-sweep anchor).
 # run_one C3pinr  stage2_vlm_C3pinr.pt  18_train_c6_orientation_pinned.py  --pool all257 --lambda 0.0 --lambda-p 10 --lambda-s 1.0 --lambda-rank 1.0
-# RUN 2 (ACTIVE) = Crank15: SAME recipe + --effrank0 15 -> moves ONLY rank (39 -> ~15); trace/loc/orient
-# held identically to C3pinr. C3pinr vs Crank15 = clean rank contrast (both fully pinned).
-# DONE: Crank15 -> shape/rank INERT (eff_rank 37->20, CLIP flat). Causal table complete except clean-location.
-# run_one Crank15  stage2_vlm_Crank15.pt  18_train_c6_orientation_pinned.py  --pool all257 --lambda 0.0 --lambda-p 10 --lambda-s 1.0 --lambda-rank 1.0 --effrank0 15
+# RUN 2 (ACTIVE) = Crank20: SAME recipe + --effrank0 15 -> moves ONLY rank (39 -> ~15); trace/loc/orient
+# held identically to C3pinr. C3pinr vs Crank20 = clean rank contrast (both fully pinned).
+# DONE: Crank20 -> shape/rank INERT (eff_rank 37->20, CLIP flat). Causal table complete except clean-location.
+# run_one Crank20  stage2_vlm_Crank20.pt  18_train_c6_orientation_pinned.py  --pool all257 --lambda 0.0 --lambda-p 10 --lambda-s 1.0 --lambda-rank 1.0 --effrank0 15
 # ACTIVE = Cloc: CLEAN-LOCATION run = distance drive (close G_mu) + scale-pin + rank-pin
 # (hold trace AND eff_rank, orientation held by no-InfoNCE). Isolates LOCATION with the
-# other 3 axes pinned -> assumption-free location causality (mirror of Cscale/Crank15).
+# other 3 axes pinned -> assumption-free location causality (mirror of Cscale/Crank20).
 # Read vs C3pinr baseline; cross-check vs C5bp (same recipe WITHOUT the rank-pin).
 # DONE: Cloc -> clean-location isolation (G_mu 178->31, trace+rank+orient held, CLIP 0.6325 == C5bp).
 # Location causal, assumption-free.
 # run_one Cloc  stage2_vlm_Cloc.pt  17_train_c5_distance.py  --pool all257 --lambda-d 0.1 --lambda-s 1.0 --lambda-rank 1.0
 # DONE = Corient: CLEAN-ORIENTATION run = InfoNCE drive (lambda_o=0.5) + location-pin +
 # scale-pin + rank-pin. Moves ONLY orientation with location/scale/rank held ->
-# clean single-axis isolation (mirror of Cloc/Cscale/Crank15). Read vs C3pinr.
+# clean single-axis isolation (mirror of Cloc/Cscale/Crank20). Read vs C3pinr.
 # lambda_o=0.5 -> AR weight 0.5 (balanced AR+InfoNCE).
 # run_one Corient  stage2_vlm_Corient.pt  18_train_c6_orientation_pinned.py  --pool all257 --lambda 0.5 --lambda-p 10 --lambda-s 1.0 --lambda-rank 1.0
 # ACTIVE = Clocorient: COMBINED run = Cloc + Corient dosages in one model. InfoNCE
@@ -222,6 +222,6 @@ tg_notify "✅ *POOLED complete* (job \`${SLURM_JOB_ID}\`)
 Checkpoint: \`stage2_vlm_C3pinr.pt\`
 Gap: \`outputs/metrics/gap_C3pinr.json\`  Captions + CLIPScore done.
 CHECK (fully-pinned baseline): G_mu ~177, trace HELD ~4700, eff_rank HELD ~39, q16 ~0.05.
-This is the correct reference. NEXT run = Crank15 (same recipe + --effrank0 15) -> rank contrast vs this."
+This is the correct reference. NEXT run = Crank20 (same recipe + --effrank0 15) -> rank contrast vs this."
 
 echo "[slurm] POOLED complete $(date -u +%Y-%m-%dT%H:%M:%SZ)"

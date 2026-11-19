@@ -14,12 +14,12 @@
 # evaluation the paper reports (geometry, captions, SPICE/METEOR, CLIPScore).
 #
 #   COND=C3pinr  SEED=1337 sbatch --job-name=tb-C3pinr  scripts/submit_tierb_seed.sbatch
-#   COND=Cloc    ...       Corient, Crank15 likewise
+#   COND=Cloc    ...       Corient, Crank20 likewise
 #
 # The training flags below are the July recipe exactly, checked against the
 # sidecars and logs of the seed-42 runs (pooled_86398/86422/86701/86463):
 # location pin 10, scale pin 1.0, rank pin 1.0 (setpoint auto-captured at 23.31,
-# or driven to 15 for Crank15), pooled-257 vector, 450 steps. Only --seed differs.
+# or driven to 15 for Crank20), pooled-257 vector, 450 steps. Only --seed differs.
 # Stage 1 is shared, so the pins reference the same setpoints as seed 42.
 #
 # Restartable: QoS is preemptable and the job is --requeue. Each stage is skipped
@@ -37,7 +37,7 @@ export HF_TOKEN=$(cat ~/.cache/huggingface/token 2>/dev/null || true)
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 source ~/.telegram_env 2>/dev/null || true   # TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID for src/utils/notify.py too
 
-COND="${COND:?set COND to one of C3pinr Cloc Corient Crank15 Cscale1500 Clocorient C3_stage2}"
+COND="${COND:?set COND to one of C3pinr Cloc Corient Crank20 Cscale1500 Clocorient C3_stage2}"
 SEED="${SEED:-1337}"
 TAG="${COND}_s${SEED}"
 CK="stage2_vlm_${TAG}.pt"
@@ -59,7 +59,7 @@ die() { echo "[tierb] FATAL: $1" >&2; tg_notify "❌ TIER B ${TAG:-?} stopped (j
 
 case "$COND" in
   C3pinr)  TRAIN=(scripts/18_train_c6_orientation_pinned.py --pool all257 --lambda 0.0 --lambda-p 10 --lambda-s 1.0 --lambda-rank 1.0) ;;
-  Crank15) TRAIN=(scripts/18_train_c6_orientation_pinned.py --pool all257 --lambda 0.0 --lambda-p 10 --lambda-s 1.0 --lambda-rank 1.0 --effrank0 15) ;;
+  Crank20) TRAIN=(scripts/18_train_c6_orientation_pinned.py --pool all257 --lambda 0.0 --lambda-p 10 --lambda-s 1.0 --lambda-rank 1.0 --effrank0 15) ;;
   Corient) TRAIN=(scripts/18_train_c6_orientation_pinned.py --pool all257 --lambda 0.5 --lambda-p 10 --lambda-s 1.0 --lambda-rank 1.0) ;;
   Cloc)    TRAIN=(scripts/17_train_c5_distance.py          --pool all257 --lambda-d 0.1 --lambda-s 1.0 --lambda-rank 1.0) ;;
   # Flags below copied from the seed-42 launch lines in submit_pooled.sbatch and

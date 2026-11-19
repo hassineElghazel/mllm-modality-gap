@@ -1,4 +1,4 @@
-"""Paper figure: brief-set and NoCaps CLIPScore difference from the control, with 95%
+"""Paper figure: brief-set and NoCaps CLIPScore difference from the constrained baseline, with 95%
 paired bootstrap intervals over images.
 
     python scripts/paper_figures/fig_robustness.py outputs/metrics fig_robust.png
@@ -21,7 +21,7 @@ def boot(d, n=10000, seed=0):
     bs = d[np.random.default_rng(seed).integers(0, len(d), (n, len(d)))].mean(1)
     return d.mean(), *np.percentile(bs, [2.5, 97.5])
 CONDS = [("Cloc", "Location", "Cloc"), ("Corient", "Orientation", "Corient"),
-         ("Crank15", "Shape", "Crank15"), ("Cscale1500", "Scale", "Cscale1500"),
+         ("Crank20", "Shape", "Crank20"), ("Cscale1500", "Scale", "Cscale1500"),
          ("Clocorient", "Location + orientation", "Clocorient")]
 SETS = [("", "COCO (5,000 images)", NAVY, -0.17), ("_ood", "NoCaps (300 images)", CORAL, 0.17)]
 
@@ -51,7 +51,7 @@ ax.set_xticks(np.arange(-0.04, 0.11, 0.04))
 ax.xaxis.set_major_formatter(mpl.ticker.FuncFormatter(lambda v, _: f"${v:+.2f}$" if abs(v) > 1e-9 else "$0$"))
 ax.tick_params(axis="x", labelsize=6.5, length=0, pad=4, colors=INK)
 ax.tick_params(axis="y", length=0, pad=6)
-ax.set_xlabel("CLIPScore difference from the control", fontsize=7.5, labelpad=5, color=INK)
+ax.set_xlabel("CLIPScore difference from the constrained baseline", fontsize=7.5, labelpad=5, color=INK)
 ax.text(XL[0] + 0.003, -0.55, "worse", fontsize=6.5, color="#a05050", va="center")
 ax.text(XL[1] - 0.003, -0.55, "better", fontsize=6.5, color="#4f7f57", va="center", ha="right")
 for s in ax.spines.values():
