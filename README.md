@@ -269,8 +269,9 @@ Long captions (n = 1300): Cloc trained on more instruction data, and LLaVA-1.5-7
 | Cloc | 80k | 0.7033 | 0.7762 | 0.3133 |
 | LLaVA-1.5-7B | 1.22M | 0.7910 | 0.5069 | 0.1518 |
 
-Released models also keep the gap open: the normalised gap $\widehat G_\mu$ is 2.19 for bakLLaVA,
-2.94 for LLaVA-1.5-13B and 3.25 for LLaVA-1.5-7B, against 0.45 for Cloc.
+The gap is not specific to our small models: fully trained released models keep it open too. Their
+normalised gap $\widehat G_\mu$, where larger means the image tokens sit further from the text, is
+3.25 for LLaVA-1.5-7B, 2.94 for LLaVA-1.5-13B and 2.19 for bakLLaVA, while for Cloc it is 0.45.
 
 ### Qualitative examples
 
