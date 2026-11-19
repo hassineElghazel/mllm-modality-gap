@@ -1,7 +1,7 @@
 # Results
 
 Generated captions and every score behind the paper's tables and figures, under the paper's names.
-The trained weights are on the Hugging Face Hub (see the repository README).
+The trained weights will be released upon acceptance.
 
 | Folder | Content |
 |---|---|

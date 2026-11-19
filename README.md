@@ -175,8 +175,8 @@ and 3.25 for LLaVA-1.5-7B, against 3.63 for our baseline and 0.45 for Cloc.
 ## Trained models and results
 
 - **Trained models.** The connector and LoRA adapters of every model in the paper (both seeds),
-  the Stage-1 connector and the constants of the location drive are on the Hugging Face Hub:
-  `HF_LINK` (see the model card for loading instructions and licences).
+  the Stage-1 connector and the constants of the location drive will be released upon
+  acceptance.
 - **Results.** [`results/`](results/) holds the generated captions and every score behind the
   tables and figures (captions, CLIPScore, SigLIP, METEOR, CHAIR, geometry), under the paper's
   names. See [`results/README.md`](results/README.md).
@@ -233,7 +233,7 @@ works are released under the same licence. If you run a modified version as a ne
 service, the AGPL requires you to offer its source to users of that service.
 
 **The paper text and its figures** are not covered by that licence; all rights in them are reserved
-by the authors. **The captions and scores in `results/` and the released model weights** are
+by the authors. **The captions and scores in `results/`** are
 provided for non-commercial research use; see `results/LICENSE-NOTICE.md`.
 
 Vendored third-party files retain their original licences; see `THIRD_PARTY_LICENSES.md`.
