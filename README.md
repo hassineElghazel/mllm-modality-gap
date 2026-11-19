@@ -252,15 +252,21 @@ Variants of the location drive, brief captions, n = 5,000:
 ### Comparison with the state of the art
 
 Our models are instruments for studying the modality gap, not competitors to state-of-the-art
-captioners. LLaVA-1.5-7B, trained on about 1.2 M samples, reaches 0.7910 CLIPScore and 0.1518
-CHAIR<sub>i</sub> on long captions. Trained on more data, Cloc moves towards it on CLIPScore, object
-recall and CHAIR<sub>i</sub>, but not on CHAIR<sub>s</sub>. Released models also keep the gap open:
-$\widehat G_\mu$ is 2.19 for bakLLaVA, 2.94 for LLaVA-1.5-13B and 3.25 for LLaVA-1.5-7B, against 0.45
-for Cloc.
+captioners. As a reference we use LLaVA-1.5-7B, a model of the same design trained on about 1.2 M
+samples. Trained on more data, Cloc moves towards it on CLIPScore, object recall and
+CHAIR<sub>i</sub>, but not on CHAIR<sub>s</sub>; without a constrained baseline trained as long, this
+reflects the method trained longer rather than the drive alone. Released models also keep the gap
+open: $\widehat G_\mu$ is 2.19 for bakLLaVA, 2.94 for LLaVA-1.5-13B and 3.25 for LLaVA-1.5-7B,
+against 0.45 for Cloc.
 
-<p align="center">
-  <img src="docs/img/scaling.png" alt="Cloc on long captions at 14.4k, 48.9k and 80k training items: CLIPScore and object recall rise, CHAIR_i falls, CHAIR_s stays around 0.75; dashed lines lead to LLaVA-1.5-7B (stars) at 1.22M items." width="520">
-</p>
+Long captions (n = 1300); Items is the number of training samples, Recall is object recall.
+
+| Model | Items | CLIPScore ↑ | Recall ↑ | CHAIR<sub>s</sub> ↓ | CHAIR<sub>i</sub> ↓ |
+|---|--:|--:|--:|--:|--:|
+| Cloc | 14.4k | 0.6187 | 0.5116 | 0.7369 | 0.3698 |
+| Cloc | 48.9k | 0.6886 | 0.6393 | 0.7869 | 0.3314 |
+| Cloc | 80k | 0.7033 | 0.6675 | 0.7762 | 0.3133 |
+| LLaVA-1.5-7B | 1.22M | 0.7910 | 0.7738 | 0.5069 | 0.1518 |
 
 ### Qualitative examples
 
