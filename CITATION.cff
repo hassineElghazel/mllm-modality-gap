@@ -1,12 +1,12 @@
 cff-version: 1.2.0
 message: "If you use this code, or results derived from it, please cite it."
-title: "Modality Gap Properties in Multimodal LLMs for Image Captioning"
+title: "Closing the Distance: The Modality Gap in MLLM Captioning"
 abstract: >-
-  Code and experiments that decompose the modality gap of a connector-based
-  multimodal large language model into four properties (centroid distance,
-  total variance, effective rank and subspace alignment) and drive each in turn
-  while holding the other three fixed, to attribute image-captioning quality to
-  each property.
+  Code and results that describe the alignment between image and text at the
+  input of a connector-based multimodal large language model by four
+  properties (location, scale, shape and orientation) and drive each in turn
+  during training while holding the other three, to attribute image-captioning
+  quality to each property.
 type: software
 authors:
   - family-names: "El Ghazel"
