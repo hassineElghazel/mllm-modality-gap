@@ -251,22 +251,26 @@ Variants of the location drive, brief captions, n = 5,000:
 
 ### Comparison with the state of the art
 
-Our models are instruments for studying the modality gap, not competitors to state-of-the-art
-captioners. As a reference we use LLaVA-1.5-7B, a model of the same design trained on about 1.2 M
-samples. Trained on more data, Cloc moves towards it on CLIPScore, object recall and
-CHAIR<sub>i</sub>, but not on CHAIR<sub>s</sub>; without a constrained baseline trained as long, this
-reflects the method trained longer rather than the drive alone. Released models also keep the gap
-open: $\widehat G_\mu$ is 2.19 for bakLLaVA, 2.94 for LLaVA-1.5-13B and 3.25 for LLaVA-1.5-7B,
-against 0.45 for Cloc.
+Our models are built to study the modality gap, not to compete with state-of-the-art captioners.
+To see how far they are from one, we compare Cloc with LLaVA-1.5-7B, a released model of the same
+design trained on about 1.2 M samples, and also train Cloc on more instruction data: 48.9k and 80k
+samples instead of 14.4k. With more data, Cloc moves towards LLaVA-1.5-7B on CLIPScore, from 0.6187
+to 0.7033 against 0.7910, and on CHAIR<sub>i</sub>, from 0.3698 to 0.3133 against 0.1518, but not on
+CHAIR<sub>s</sub>, which stays above 0.73 while LLaVA-1.5-7B reaches 0.5069. We did not train the
+constrained baseline on the same data, so these gains come from our method trained longer, not from
+the location drive alone.
 
-Long captions (n = 1300); Items is the number of training samples, Recall is object recall.
+Long captions (n = 1300): Cloc trained on more instruction data, and LLaVA-1.5-7B.
 
-| Model | Items | CLIPScore ↑ | Recall ↑ | CHAIR<sub>s</sub> ↓ | CHAIR<sub>i</sub> ↓ |
-|---|--:|--:|--:|--:|--:|
-| Cloc | 14.4k | 0.6187 | 0.5116 | 0.7369 | 0.3698 |
-| Cloc | 48.9k | 0.6886 | 0.6393 | 0.7869 | 0.3314 |
-| Cloc | 80k | 0.7033 | 0.6675 | 0.7762 | 0.3133 |
-| LLaVA-1.5-7B | 1.22M | 0.7910 | 0.7738 | 0.5069 | 0.1518 |
+| Model | Training samples | CLIPScore ↑ | CHAIR<sub>s</sub> ↓ | CHAIR<sub>i</sub> ↓ |
+|---|--:|--:|--:|--:|
+| Cloc | 14.4k | 0.6187 | 0.7369 | 0.3698 |
+| Cloc | 48.9k | 0.6886 | 0.7869 | 0.3314 |
+| Cloc | 80k | 0.7033 | 0.7762 | 0.3133 |
+| LLaVA-1.5-7B | 1.22M | 0.7910 | 0.5069 | 0.1518 |
+
+Released models also keep the gap open: the normalised gap $\widehat G_\mu$ is 2.19 for bakLLaVA,
+2.94 for LLaVA-1.5-13B and 3.25 for LLaVA-1.5-7B, against 0.45 for Cloc.
 
 ### Qualitative examples
 
